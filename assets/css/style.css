@@ -19,7 +19,7 @@
   --font-heading: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
 
-  --container-width: 1120px;
+  --container-width: 1280px;
   --header-height: 64px;
 }
 
@@ -177,7 +177,6 @@ summary:focus-visible {
 .logo-img {
   height: 36px;
   width: auto;
-  border-radius: 8px;
 }
 
 .main-nav {
@@ -187,8 +186,10 @@ summary:focus-visible {
 }
 
 .nav-link {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--text-muted);
   transition: color 0.2s ease;
 }
@@ -299,27 +300,26 @@ summary:focus-visible {
   position: absolute;
   inset: 0;
   background: #20253b url('../img/hero-bg.webp') center / cover no-repeat;
-  --tilt-x: 0px;
-  --tilt-y: 0px;
-  transform: translate(var(--tilt-x), var(--tilt-y));
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .hero-photo {
   position: absolute;
   bottom: 0;
   left: 50%;
-  --tilt-x: 0px;
-  --tilt-y: 0px;
-  transform: translateX(calc(-50% + var(--tilt-x))) translateY(var(--tilt-y));
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  height: 60%;
+  transform: translateX(-50%);
+  height: 64%;
   width: auto;
   max-width: none;
   object-fit: contain;
   object-position: bottom;
   z-index: 1;
   filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55));
+}
+
+@media (min-width: 768px) {
+  .hero-photo {
+    height: 68%;
+  }
 }
 
 .hero-overlay {
@@ -448,7 +448,7 @@ summary:focus-visible {
   list-style: none;
   margin: 0 auto 0 0;
   padding: 0;
-  max-width: 760px;
+  max-width: 920px;
   border-top: 1px solid var(--border);
 }
 
@@ -557,36 +557,21 @@ summary:focus-visible {
 
 /* ===== Music ===== */
 
-.clips-carousel-wrap {
-  margin: 0 auto 48px;
+.clip-player {
+  margin: 0 0 48px;
 }
 
-.clips-carousel {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding: 2px;
-}
-
-.clips-carousel::-webkit-scrollbar {
-  display: none;
-}
-
-.clip-slide {
+.clip-stage {
   position: relative;
-  flex: 0 0 78%;
-  max-width: 380px;
+  width: 100%;
+  max-width: 960px;
   aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
   background: var(--bg-elevated);
-  scroll-snap-align: center;
 }
 
-.clip-slide iframe {
+.clip-stage iframe {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -617,8 +602,8 @@ summary:focus-visible {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
   background: rgba(10, 10, 10, 0.6);
   backdrop-filter: blur(2px);
@@ -630,8 +615,8 @@ summary:focus-visible {
 }
 
 .clip-play svg {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   margin-left: 3px;
 }
 
@@ -640,16 +625,16 @@ summary:focus-visible {
   transform: translate(-50%, -50%) scale(1.08);
 }
 
-.carousel-controls {
-  display: none;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 16px;
+.clip-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
 }
 
-.carousel-arrow {
-  width: 40px;
-  height: 40px;
+.clip-arrow {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: transparent;
@@ -661,43 +646,28 @@ summary:focus-visible {
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.carousel-arrow svg {
+.clip-arrow svg {
   width: 18px;
   height: 18px;
 }
 
-.carousel-arrow:hover {
+.clip-arrow:hover {
   border-color: var(--text);
   background: var(--bg-elevated);
 }
 
-@media (min-width: 900px) {
-  .carousel-controls {
-    display: flex;
-  }
-
-  .clip-slide {
-    flex-basis: 340px;
-  }
+.clip-counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
 }
 
 .spotify-player {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-@media (min-width: 768px) {
-  .spotify-player {
-    margin: 0;
-  }
-
-  .streaming {
-    text-align: left;
-  }
-
-  .streaming-links {
-    justify-content: flex-start;
-  }
+  width: 100%;
+  max-width: 960px;
+  margin: 32px 0 40px;
 }
 
 .spotify-player iframe {
@@ -709,10 +679,10 @@ summary:focus-visible {
   text-align: center;
 }
 
-.streaming + .streaming,
-.streaming + .spotify-player,
-.spotify-player + .streaming {
-  margin-top: 40px;
+@media (min-width: 768px) {
+  .streaming {
+    text-align: left;
+  }
 }
 
 .streaming-label {
@@ -721,25 +691,31 @@ summary:focus-visible {
   margin: 0 0 20px;
 }
 
-.streaming-links {
+.platform-links {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 26px;
 }
 
-.streaming-link {
-  padding: 12px 24px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+@media (min-width: 768px) {
+  .platform-links {
+    justify-content: flex-start;
+  }
 }
 
-.streaming-link:hover {
-  border-color: var(--text);
-  background: var(--bg-elevated);
+.platform-link {
+  color: var(--text-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.platform-link:hover {
+  color: var(--text);
+  transform: translateY(-2px);
+}
+
+.platform-link svg {
+  width: 28px;
+  height: 28px;
 }
 
 /* ===== FAQ + Booking ===== */
@@ -751,44 +727,61 @@ summary:focus-visible {
 
 .faq-item {
   border-bottom: 1px solid var(--border);
-  padding: 18px 0;
 }
 
-.faq-item summary {
+.faq-summary {
+  width: 100%;
+  padding: 18px 0;
+  margin: 0;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-family: inherit;
   cursor: pointer;
   font-weight: 600;
   font-size: 15px;
-  list-style: none;
+  text-align: left;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
 
-.faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq-item summary::after {
-  content: '+';
+.faq-icon {
   font-size: 20px;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.faq-item.is-open summary::after {
+.faq-item.is-open .faq-icon {
   transform: rotate(45deg);
 }
 
-.faq-item p {
-  margin: 14px 0 0;
+/* Grid-rows reveal: animating an actual track size is far smoother than
+   animating `height` (which forces layout every frame). No JS measuring. */
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.is-open .faq-panel {
+  grid-template-rows: 1fr;
+}
+
+.faq-panel-inner {
+  overflow: hidden;
+}
+
+.faq-panel-inner p {
+  margin: 0 0 18px;
   color: var(--text-muted);
   font-size: 14px;
   line-height: 1.6;
 }
 
-.faq-item p a {
+.faq-panel-inner p a {
   color: var(--text);
   text-decoration: underline;
 }
@@ -799,21 +792,57 @@ summary:focus-visible {
 }
 
 .booking-block {
-  padding: 32px;
+  padding: 40px;
   background: var(--bg-elevated);
   border-radius: 20px;
 }
 
-.booking-manager {
-  font-size: 15px;
-  color: var(--text-muted);
-  margin: 0 0 20px;
+.booking-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg-elevated-2);
+  color: var(--gis-green);
+  margin-bottom: 24px;
 }
 
-.booking-social {
+.booking-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.booking-text {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 28px;
+  max-width: 34ch;
+}
+
+.booking-contact {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 28px;
+}
+
+.booking-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.booking-role {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.booking-cta svg {
+  width: 18px;
+  height: 18px;
 }
 
 @media (min-width: 900px) {
