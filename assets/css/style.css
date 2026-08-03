@@ -12,8 +12,10 @@
   --border: rgba(255, 255, 255, 0.1);
   --accent: #e63946;
   --accent-hover: #ff4d5a;
+  --gis-green: #2ecc71;
+  --gis-green-hover: #4cde85;
 
-  --font-heading: 'Montserrat', 'Inter', sans-serif;
+  --font-heading: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
 
   --container-width: 1120px;
@@ -143,11 +145,14 @@ a {
 }
 
 .logo {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 36px;
+  width: auto;
+  border-radius: 8px;
 }
 
 .main-nav {
@@ -310,27 +315,14 @@ a {
   padding-top: calc(var(--header-height) + 20px);
 }
 
-.hero-eyebrow {
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin: 0;
-}
-
 .hero-title {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(2.6rem, 12vw, 6rem);
-  line-height: 0.98;
-  letter-spacing: 0.01em;
   margin: 0;
 }
 
-.hero-subtitle {
-  font-size: 16px;
-  color: var(--text-muted);
-  margin: 0;
+.hero-title-img {
+  width: min(90vw, 520px);
+  height: auto;
+  display: block;
 }
 
 .hero-actions {
@@ -389,14 +381,23 @@ a {
   font-size: 15px;
 }
 
+@media (min-width: 768px) {
+  .section-title {
+    text-align: left;
+  }
+
+  .section-subtitle {
+    text-align: left;
+  }
+}
+
 /* ===== Tour dates ===== */
 
 .tour-list {
   list-style: none;
-  margin: 0;
+  margin: 0 auto 0 0;
   padding: 0;
   max-width: 760px;
-  margin-inline: auto;
   border-top: 1px solid var(--border);
 }
 
@@ -444,15 +445,28 @@ a {
 }
 
 .tour-venue {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 5px;
   font-size: 13px;
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--gis-green);
+  text-decoration: underline;
+  text-decoration-color: rgba(46, 204, 113, 0.4);
+  text-underline-offset: 2px;
   width: fit-content;
   transition: color 0.2s ease;
 }
 
+.tour-venue svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
 .tour-venue:hover {
-  color: var(--text);
-  text-decoration: underline;
+  color: var(--gis-green-hover);
+  text-decoration-color: currentColor;
 }
 
 .tour-time {
@@ -483,26 +497,147 @@ a {
 
 /* ===== Music ===== */
 
-.video-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 860px;
+.clips-carousel-wrap {
   margin: 0 auto 48px;
+}
+
+.clips-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px;
+}
+
+.clips-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.clip-slide {
+  position: relative;
+  flex: 0 0 78%;
+  max-width: 380px;
   aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
   background: var(--bg-elevated);
+  scroll-snap-align: center;
 }
 
-.video-wrap iframe {
+.clip-slide iframe {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
 }
 
+.clip-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.clip-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.clip-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.clip-play svg {
+  width: 22px;
+  height: 22px;
+  margin-left: 3px;
+}
+
+.clip-thumb:hover .clip-play {
+  background: var(--accent);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.carousel-controls {
+  display: none;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.carousel-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.carousel-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.carousel-arrow:hover {
+  border-color: var(--text);
+  background: var(--bg-elevated);
+}
+
+@media (min-width: 900px) {
+  .carousel-controls {
+    display: flex;
+  }
+
+  .clip-slide {
+    flex-basis: 340px;
+  }
+}
+
 .spotify-player {
   max-width: 860px;
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .spotify-player {
+    margin: 0;
+  }
+
+  .streaming {
+    text-align: left;
+  }
+
+  .streaming-links {
+    justify-content: flex-start;
+  }
 }
 
 .spotify-player iframe {
