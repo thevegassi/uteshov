@@ -506,6 +506,10 @@ a {
   text-align: center;
 }
 
+.streaming + .streaming {
+  margin-top: 40px;
+}
+
 .streaming-label {
   font-size: 14px;
   color: var(--text-muted);
@@ -579,6 +583,16 @@ a {
   line-height: 1.6;
 }
 
+.faq-item p a {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.faq-contact-btn {
+  display: inline-flex;
+  margin-top: 28px;
+}
+
 .booking-block {
   padding: 32px;
   background: var(--bg-elevated);
@@ -588,26 +602,12 @@ a {
 .booking-manager {
   font-size: 15px;
   color: var(--text-muted);
-  margin: 0 0 16px;
-}
-
-.booking-contact {
-  display: block;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 10px;
-  transition: color 0.2s ease;
-}
-
-.booking-contact:hover {
-  color: var(--accent);
+  margin: 0 0 20px;
 }
 
 .booking-social {
   display: flex;
   gap: 12px;
-  margin-top: 24px;
   flex-wrap: wrap;
 }
 
