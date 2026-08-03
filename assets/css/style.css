@@ -268,9 +268,7 @@ a {
 .hero-media-glow {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 15%, rgba(230, 57, 70, 0.22), transparent 55%),
-    linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 70%);
+  background: #20253b url('../img/hero-bg.webp') center / cover no-repeat;
 }
 
 .hero-photo {
