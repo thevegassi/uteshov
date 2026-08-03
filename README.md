@@ -22,12 +22,14 @@ python3 -m http.server 8000
 
 ## Что нужно доделать перед запуском
 
-1. **Фото/видео артиста** — сейчас в Hero-секции градиентная заглушка
-   (`.hero-media-placeholder` в `assets/css/style.css`). Добавьте фото в
-   `assets/img/hero.jpg` и замените заглушку на
-   `background: url('../img/hero.jpg') center/cover no-repeat;`,
-   либо подключите `<video>` вместо `<div class="hero-media-placeholder">`
-   в `index.html`.
+1. **Фото/видео артиста** — Hero-блок уже использует реальное фото
+   (`assets/img/hero-artist.webp`, вырезано на прозрачном фоне). Оттуда же
+   автоматически сгенерированы `assets/img/favicon.png` (кроп лица) и
+   `assets/img/og-cover.jpg` (обложка для соцсетей). Если появится другое
+   фото — замените `src` у `.hero-photo` в `index.html`; при необходимости
+   зацикленное видео можно подключить через `<video>` вместо `<img>`
+   (структура `.hero-media` в CSS уже поддерживает абсолютное позиционирование
+   слоёв).
 2. **График тура** — блок `#tour` в `index.html` уже заполнен реальными
    датами (Қызылорда — Алматы, 5–26 сентября) со ссылками на 2GIS и
    билетного оператора sxodim.com. Алматы (26 сентября) — в статусе
@@ -51,8 +53,6 @@ python3 -m http.server 8000
    Вставьте свои ID и раскомментируйте нужные блоки. Клики по кнопке
    «Купить билеты» уже отслеживаются через `assets/js/main.js`
    (`data-track="buy-tickets"`).
-8. **Favicon и OG-обложка** — добавьте `assets/img/favicon.png` и
-   `assets/img/og-cover.jpg` (уже прописаны в `<head>`).
 
 ## Деплой
 
