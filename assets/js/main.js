@@ -44,6 +44,32 @@
     fadeEls.forEach((el) => el.classList.add('is-visible'));
   }
 
+  // ---- Clips carousel: click-to-play thumbnails + arrow controls ----
+  document.querySelectorAll('.clip-thumb').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const videoId = btn.dataset.videoId;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      iframe.title = 'Клип Абзала Утешова';
+      iframe.loading = 'lazy';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      btn.replaceWith(iframe);
+    });
+  });
+
+  const clipsCarousel = document.getElementById('clips-carousel');
+  if (clipsCarousel) {
+    document.querySelectorAll('[data-carousel-dir]').forEach((arrow) => {
+      arrow.addEventListener('click', () => {
+        const dir = Number(arrow.dataset.carouselDir);
+        const slide = clipsCarousel.querySelector('.clip-slide');
+        const step = slide ? slide.getBoundingClientRect().width + 16 : 300;
+        clipsCarousel.scrollBy({ left: dir * step, behavior: 'smooth' });
+      });
+    });
+  }
+
   // ---- Analytics: track "Buy tickets" clicks ----
   // Подключите реальные пиксели в index.html (перед </head>):
   //   Facebook Pixel, TikTok Pixel, Google Analytics / Яндекс.Метрику.
