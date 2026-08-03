@@ -664,6 +664,17 @@ summary:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 
+.spotify-player {
+  width: 100%;
+  max-width: 960px;
+  margin: 32px 0 40px;
+}
+
+.spotify-player iframe {
+  display: block;
+  width: 100%;
+}
+
 .streaming {
   text-align: center;
 }
