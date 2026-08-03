@@ -87,8 +87,8 @@
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
     <div class="hero-media" aria-hidden="true">
-      <!-- Замените на реальное фото/видео артиста: assets/img/hero.jpg или подключите <video> -->
-      <div class="hero-media-placeholder"></div>
+      <div class="hero-media-glow"></div>
+      <img src="assets/img/hero-artist.webp" alt="" class="hero-photo">
     </div>
     <div class="hero-overlay"></div>
 
@@ -96,28 +96,30 @@
       <p class="hero-eyebrow fade-in">Официальный сайт артиста</p>
       <h1 class="hero-title fade-in">АБЗАЛ<br>УТЕШОВ</h1>
       <p class="hero-subtitle fade-in">Тур 2026 — города и даты уже открыты</p>
-      <a href="#tour" class="btn btn-accent btn-large fade-in" data-track="buy-tickets">Купить билеты</a>
     </div>
 
-    <div class="hero-socials fade-in" aria-label="Социальные сети">
-      <a href="https://www.instagram.com/uteshov.tour/" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
-      </a>
-      <a href="https://www.tiktok.com/@uteshov.tour" target="_blank" rel="noopener" aria-label="TikTok">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 2h3c.2 1.9 1.4 3.5 3.5 3.9v3.1c-1.3 0-2.5-.4-3.5-1.1v6.6c0 3.6-2.9 6.5-6.5 6.5S4.5 17.1 4.5 13.5 7.4 7 11 7c.3 0 .6 0 .9.1v3.2c-.3-.1-.6-.2-.9-.2-1.9 0-3.4 1.5-3.4 3.4S9.1 16.9 11 16.9s3.4-1.5 3.4-3.4V2z"/></svg>
-      </a>
-      <a href="#" target="_blank" rel="noopener" aria-label="YouTube">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2c-.3-1.1-1.1-1.9-2.2-2.2C17.5 4.5 12 4.5 12 4.5s-5.5 0-7.4.5c-1.1.3-1.9 1.1-2.2 2.2C2 9.1 2 12 2 12s0 2.9.4 4.8c.3 1.1 1.1 1.9 2.2 2.2 1.9.5 7.4.5 7.4.5s5.5 0 7.4-.5c1.1-.3 1.9-1.1 2.2-2.2.4-1.9.4-4.8.4-4.8s0-2.9-.4-4.8zM10 15.3V8.7l6 3.3-6 3.3z"/></svg>
-      </a>
-      <a href="#" target="_blank" rel="noopener" aria-label="Telegram">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5 1.9 5.8c.2.6.4.8.9.8.4 0 .6-.2.8-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.2-.5-1.7-1.1-1.4zM8.8 13.9 18 8.2c.4-.3.8 0 .5.3l-7.8 7.1-.3 3.1-1.6-4.8z"/></svg>
-      </a>
-      <a href="#" target="_blank" rel="noopener" aria-label="Spotify">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.9-9.3-1-.4.1-.7-.1-.8-.5-.1-.4.1-.7.5-.8 4-.9 7.5-.5 10.3 1.2.3.2.4.6.2.9zm1.2-2.8c-.2.4-.7.5-1.1.3-2.9-1.8-7.3-2.3-10.7-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.9-1.2 8.7-.6 12 1.4.4.2.5.7.3 1zm.1-2.9C14.3 8.6 8.9 8.4 5.8 9.3c-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.6-1.1 9.6-.9 13.4 1.3.5.3.6.9.3 1.3-.3.4-.9.5-1.3.2z"/></svg>
-      </a>
+    <div class="hero-actions fade-in">
+      <a href="#tour" class="btn btn-accent btn-large" data-track="buy-tickets">Купить билеты</a>
+
+      <div class="hero-socials" aria-label="Социальные сети">
+        <a href="https://www.instagram.com/uteshov.tour/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@uteshov.tour" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 2h3c.2 1.9 1.4 3.5 3.5 3.9v3.1c-1.3 0-2.5-.4-3.5-1.1v6.6c0 3.6-2.9 6.5-6.5 6.5S4.5 17.1 4.5 13.5 7.4 7 11 7c.3 0 .6 0 .9.1v3.2c-.3-.1-.6-.2-.9-.2-1.9 0-3.4 1.5-3.4 3.4S9.1 16.9 11 16.9s3.4-1.5 3.4-3.4V2z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/channel/UC5SNxKWzX6GTLOy4GnrFlOA" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2c-.3-1.1-1.1-1.9-2.2-2.2C17.5 4.5 12 4.5 12 4.5s-5.5 0-7.4.5c-1.1.3-1.9 1.1-2.2 2.2C2 9.1 2 12 2 12s0 2.9.4 4.8c.3 1.1 1.1 1.9 2.2 2.2 1.9.5 7.4.5 7.4.5s5.5 0 7.4-.5c1.1-.3 1.9-1.1 2.2-2.2.4-1.9.4-4.8.4-4.8s0-2.9-.4-4.8zM10 15.3V8.7l6 3.3-6 3.3z"/></svg>
+        </a>
+        <a href="https://t.me/abzaloteshov" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 2.9 11.6c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5 1.9 5.8c.2.6.4.8.9.8.4 0 .6-.2.8-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.2-.5-1.7-1.1-1.4zM8.8 13.9 18 8.2c.4-.3.8 0 .5.3l-7.8 7.1-.3 3.1-1.6-4.8z"/></svg>
+        </a>
+        <a href="https://open.spotify.com/artist/0Ju7FJOHFT7BKpTVHFt2Dh?si=u062SGEcTO-8nJscYswP_Q" target="_blank" rel="noopener" aria-label="Spotify">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.9-9.3-1-.4.1-.7-.1-.8-.5-.1-.4.1-.7.5-.8 4-.9 7.5-.5 10.3 1.2.3.2.4.6.2.9zm1.2-2.8c-.2.4-.7.5-1.1.3-2.9-1.8-7.3-2.3-10.7-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.9-1.2 8.7-.6 12 1.4.4.2.5.7.3 1zm.1-2.9C14.3 8.6 8.9 8.4 5.8 9.3c-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.6-1.1 9.6-.9 13.4 1.3.5.3.6.9.3 1.3-.3.4-.9.5-1.3.2z"/></svg>
+        </a>
+      </div>
     </div>
 
-    <a href="#tour" class="scroll-hint" aria-hidden="true"><span></span></a>
   </section>
 
   <!-- ============ TOUR DATES ============ -->
@@ -290,8 +292,8 @@
 
       <div class="video-wrap fade-in">
         <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Последний клип Абзала Утешова"
+          src="https://www.youtube.com/embed/9jimi5Efc0Y"
+          title="Клип Абзала Утешова"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
@@ -299,11 +301,32 @@
       </div>
 
       <div class="streaming fade-in">
-        <p class="streaming-label">Слушать на всех площадках</p>
+        <p class="streaming-label">Ещё клипы</p>
         <div class="streaming-links">
-          <a href="#" target="_blank" rel="noopener" class="streaming-link">Spotify</a>
-          <a href="#" target="_blank" rel="noopener" class="streaming-link">Apple Music</a>
-          <a href="#" target="_blank" rel="noopener" class="streaming-link">Яндекс Музыка</a>
+          <a href="https://youtu.be/zoIS-RphZyA" target="_blank" rel="noopener" class="streaming-link">Клип 2</a>
+          <a href="https://youtu.be/2tUWM5gsl04" target="_blank" rel="noopener" class="streaming-link">Клип 3</a>
+        </div>
+      </div>
+
+      <div class="spotify-player fade-in">
+        <iframe
+          data-testid="embed-iframe"
+          style="border-radius: 12px"
+          src="https://open.spotify.com/embed/artist/0Ju7FJOHFT7BKpTVHFt2Dh?utm_source=generator&theme=0"
+          width="100%"
+          height="352"
+          frameborder="0"
+          allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <div class="streaming fade-in">
+        <p class="streaming-label">Слушать также на</p>
+        <div class="streaming-links">
+          <a href="https://music.apple.com/ru/artist/abzal-uteshov/1795922058" target="_blank" rel="noopener" class="streaming-link">Apple Music</a>
+          <a href="https://music.yandex.kz/artist/18951650?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener" class="streaming-link">Яндекс Музыка</a>
         </div>
       </div>
     </div>
@@ -328,23 +351,22 @@
 
         <details class="faq-item">
           <summary>Кому писать, если билет не пришёл на почту?</summary>
-          <p>Обратитесь в поддержку билетного оператора, у которого совершалась покупка — контакты указаны в письме-подтверждении заказа.</p>
+          <p>Напишите Акжолу в <a href="https://wa.me/77757927594?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%D0%B1%D0%B5.%20%D0%90%D0%B1%D0%B7%D0%B0%D0%BB%20%D0%A3%D1%82%D0%B5%D1%88%D0%BE%D0%B2%D1%82%D1%96%D2%A3%20%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D1%80%D1%82%D1%96%20%D0%B1%D0%BE%D0%B9%D1%8B%D0%BD%D1%88%D0%B0%20%D0%B6%D0%B0%D0%B7%D1%8B%D0%BF%20%D1%82%D2%B1%D1%80%20%D0%B5%D0%B4%D1%96%D0%BC" target="_blank" rel="noopener">WhatsApp</a> — поможет с любым вопросом по билетам и туру.</p>
         </details>
 
         <details class="faq-item">
           <summary>Можно ли вернуть билет?</summary>
           <p>Возврат и обмен билетов осуществляется согласно правилам билетного оператора, у которого была совершена покупка.</p>
         </details>
+
+        <a href="https://wa.me/77757927594?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%D0%B1%D0%B5.%20%D0%90%D0%B1%D0%B7%D0%B0%D0%BB%20%D0%A3%D1%82%D0%B5%D1%88%D0%BE%D0%B2%D1%82%D1%96%D2%A3%20%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D1%80%D1%82%D1%96%20%D0%B1%D0%BE%D0%B9%D1%8B%D0%BD%D1%88%D0%B0%20%D0%B6%D0%B0%D0%B7%D1%8B%D0%BF%20%D1%82%D2%B1%D1%80%20%D0%B5%D0%B4%D1%96%D0%BC" target="_blank" rel="noopener" class="btn btn-outline btn-small faq-contact-btn">Остались вопросы? Написать в WhatsApp</a>
       </div>
 
       <div class="booking-block fade-in" id="booking">
         <h2 class="section-title section-title-left">Организация концертов и сотрудничество</h2>
-        <p class="booking-manager">Менеджер: Дана Ахметова</p>
-        <a href="tel:+77001234567" class="booking-contact">+7 700 123 45 67</a>
-        <a href="mailto:booking@abzaluteshov.kz" class="booking-contact">booking@abzaluteshov.kz</a>
+        <p class="booking-manager">Менеджер: Маруф</p>
         <div class="booking-social">
-          <a href="https://wa.me/77001234567" target="_blank" rel="noopener" class="btn btn-outline btn-small">WhatsApp</a>
-          <a href="https://t.me/uteshov_booking" target="_blank" rel="noopener" class="btn btn-outline btn-small">Telegram</a>
+          <a href="https://wa.me/77786198980" target="_blank" rel="noopener" class="btn btn-outline btn-small">WhatsApp</a>
         </div>
       </div>
 
@@ -360,8 +382,8 @@
     <div class="footer-socials">
       <a href="https://www.instagram.com/uteshov.tour/" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
       <a href="https://www.tiktok.com/@uteshov.tour" target="_blank" rel="noopener" aria-label="TikTok">TikTok</a>
-      <a href="#" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
-      <a href="#" target="_blank" rel="noopener" aria-label="Telegram">Telegram</a>
+      <a href="https://www.youtube.com/channel/UC5SNxKWzX6GTLOy4GnrFlOA" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
+      <a href="https://t.me/abzaloteshov" target="_blank" rel="noopener" aria-label="Telegram">Telegram</a>
     </div>
     <span class="footer-copy">© 2026 Abzal Uteshov. Все права защищены.</span>
   </div>

@@ -253,9 +253,10 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   text-align: center;
   overflow: hidden;
+  padding-bottom: 28px;
 }
 
 .hero-media {
@@ -264,31 +265,51 @@ a {
   z-index: 0;
 }
 
-/* Placeholder gradient — replace with a real photo/video of the artist.
-   e.g. background: url('../img/hero.jpg') center/cover no-repeat; */
-.hero-media-placeholder {
-  width: 100%;
-  height: 100%;
+.hero-media-glow {
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(ellipse at 50% 20%, rgba(230, 57, 70, 0.25), transparent 60%),
+    radial-gradient(ellipse at 50% 15%, rgba(230, 57, 70, 0.22), transparent 55%),
     linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 70%);
+}
+
+.hero-photo {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 60%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  object-position: bottom;
+  z-index: 1;
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55));
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 60%, var(--bg) 100%);
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.3) 20%,
+    rgba(0, 0, 0, 0) 38%,
+    rgba(0, 0, 0, 0) 66%,
+    var(--bg) 100%
+  );
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
-  padding-top: var(--header-height);
+  gap: 16px;
+  padding-top: calc(var(--header-height) + 20px);
 }
 
 .hero-eyebrow {
@@ -311,16 +332,21 @@ a {
 .hero-subtitle {
   font-size: 16px;
   color: var(--text-muted);
-  margin: 0 0 8px;
+  margin: 0;
+}
+
+.hero-actions {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
 }
 
 .hero-socials {
-  position: relative;
-  z-index: 2;
   display: flex;
   gap: 22px;
-  margin-top: 40px;
-  padding-bottom: 32px;
 }
 
 .hero-socials a {
@@ -335,43 +361,6 @@ a {
 .hero-socials svg {
   width: 22px;
   height: 22px;
-}
-
-.scroll-hint {
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  width: 22px;
-  height: 34px;
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  display: none;
-}
-
-.scroll-hint span {
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  width: 3px;
-  height: 6px;
-  background: var(--text-muted);
-  border-radius: 2px;
-  transform: translateX(-50%);
-  animation: scroll-hint-move 1.6s ease infinite;
-}
-
-@keyframes scroll-hint-move {
-  0% { opacity: 1; top: 6px; }
-  70% { opacity: 0; top: 16px; }
-  100% { opacity: 0; top: 6px; }
-}
-
-@media (min-width: 768px) {
-  .scroll-hint {
-    display: block;
-  }
 }
 
 /* ===== Sections (shared) ===== */
@@ -513,8 +502,24 @@ a {
   border: 0;
 }
 
+.spotify-player {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.spotify-player iframe {
+  display: block;
+  width: 100%;
+}
+
 .streaming {
   text-align: center;
+}
+
+.streaming + .streaming,
+.streaming + .spotify-player,
+.spotify-player + .streaming {
+  margin-top: 40px;
 }
 
 .streaming-label {
@@ -590,6 +595,16 @@ a {
   line-height: 1.6;
 }
 
+.faq-item p a {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.faq-contact-btn {
+  display: inline-flex;
+  margin-top: 28px;
+}
+
 .booking-block {
   padding: 32px;
   background: var(--bg-elevated);
@@ -599,26 +614,12 @@ a {
 .booking-manager {
   font-size: 15px;
   color: var(--text-muted);
-  margin: 0 0 16px;
-}
-
-.booking-contact {
-  display: block;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 10px;
-  transition: color 0.2s ease;
-}
-
-.booking-contact:hover {
-  color: var(--accent);
+  margin: 0 0 20px;
 }
 
 .booking-social {
   display: flex;
   gap: 12px;
-  margin-top: 24px;
   flex-wrap: wrap;
 }
 
