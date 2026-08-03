@@ -75,104 +75,70 @@
     });
   }
 
-  // ---- Hero depth: subtle mouse-tracking parallax (desktop only) ----
-  const hero = document.getElementById('hero');
-  const heroPhoto = document.querySelector('.hero-photo');
-  const heroGlow = document.querySelector('.hero-media-glow');
-  if (canMagnetize && hero && heroPhoto && heroGlow) {
-    hero.addEventListener('mousemove', (e) => {
-      const rect = hero.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      heroPhoto.style.setProperty('--tilt-x', `${x * -16}px`);
-      heroPhoto.style.setProperty('--tilt-y', `${y * -10}px`);
-      heroGlow.style.setProperty('--tilt-x', `${x * -6}px`);
-      heroGlow.style.setProperty('--tilt-y', `${y * -6}px`);
-    });
-    hero.addEventListener('mouseleave', () => {
-      heroPhoto.style.setProperty('--tilt-x', '0px');
-      heroPhoto.style.setProperty('--tilt-y', '0px');
-      heroGlow.style.setProperty('--tilt-x', '0px');
-      heroGlow.style.setProperty('--tilt-y', '0px');
+  // ---- Clips player: single large clip, arrows page between videos ----
+  const clips = [
+    { id: '9jimi5Efc0Y', label: 'клип 1' },
+    { id: 'zoIS-RphZyA', label: 'клип 2' },
+    { id: '2tUWM5gsl04', label: 'клип 3' },
+  ];
+  const clipStage = document.getElementById('clip-stage');
+  const clipCounter = document.getElementById('clip-counter');
+  let clipIndex = 0;
+
+  function playClip(id) {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+    iframe.title = 'Клип Абзала Утешова';
+    iframe.loading = 'lazy';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    clipStage.replaceChildren(iframe);
+  }
+
+  function renderClip(index) {
+    clipIndex = (index + clips.length) % clips.length;
+    const clip = clips[clipIndex];
+
+    const btn = document.createElement('button');
+    btn.className = 'clip-thumb';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', `Смотреть ${clip.label}`);
+
+    const img = document.createElement('img');
+    img.src = `https://i.ytimg.com/vi/${clip.id}/hqdefault.jpg`;
+    img.alt = '';
+    img.width = 480;
+    img.height = 360;
+    img.loading = 'lazy';
+
+    const play = document.createElement('span');
+    play.className = 'clip-play';
+    play.setAttribute('aria-hidden', 'true');
+    play.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+
+    btn.append(img, play);
+    btn.addEventListener('click', () => playClip(clip.id));
+    clipStage.replaceChildren(btn);
+
+    if (clipCounter) clipCounter.textContent = `${clipIndex + 1} / ${clips.length}`;
+  }
+
+  if (clipStage) {
+    renderClip(0);
+    document.querySelectorAll('[data-clip-dir]').forEach((arrow) => {
+      arrow.addEventListener('click', () => renderClip(clipIndex + Number(arrow.dataset.clipDir)));
     });
   }
 
-  // ---- Clips carousel: click-to-play thumbnails + arrow controls ----
-  document.querySelectorAll('.clip-thumb').forEach((btn) => {
+  // ---- FAQ accordion: pure-CSS grid-rows reveal (see .faq-panel in style.css) ----
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const btn = item.querySelector('.faq-summary');
+    if (!btn) return;
     btn.addEventListener('click', () => {
-      const videoId = btn.dataset.videoId;
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      iframe.title = 'Клип Абзала Утешова';
-      iframe.loading = 'lazy';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      btn.replaceWith(iframe);
+      const isOpen = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
     });
   });
-
-  const clipsCarousel = document.getElementById('clips-carousel');
-  if (clipsCarousel) {
-    document.querySelectorAll('[data-carousel-dir]').forEach((arrow) => {
-      arrow.addEventListener('click', () => {
-        const dir = Number(arrow.dataset.carouselDir);
-        const slide = clipsCarousel.querySelector('.clip-slide');
-        const step = slide ? slide.getBoundingClientRect().width + 16 : 300;
-        clipsCarousel.scrollBy({ left: dir * step, behavior: 'smooth' });
-      });
-    });
-  }
-
-  // ---- Animated FAQ accordion: smooth height instead of the native <details> snap ----
-  if (typeof Element.prototype.animate === 'function') {
-    document.querySelectorAll('.faq-item').forEach((details) => {
-      const summary = details.querySelector('summary');
-      const content = details.querySelector('p');
-      if (!summary || !content) return;
-
-      let animation = null;
-
-      summary.addEventListener('click', (e) => {
-        e.preventDefault();
-        details.style.overflow = 'hidden';
-        if (details.open) {
-          details.classList.remove('is-open');
-          collapse();
-        } else {
-          details.classList.add('is-open');
-          expand();
-        }
-      });
-
-      function run(startHeight, endHeight, openWhenDone) {
-        if (animation) animation.cancel();
-        animation = details.animate(
-          { height: [`${startHeight}px`, `${endHeight}px`] },
-          { duration: 280, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
-        );
-        animation.onfinish = () => {
-          details.open = openWhenDone;
-          details.style.height = '';
-          details.style.overflow = '';
-          animation = null;
-        };
-      }
-
-      function expand() {
-        const startHeight = details.offsetHeight;
-        details.open = true;
-        const margin = parseFloat(getComputedStyle(content).marginTop) || 0;
-        const endHeight = summary.offsetHeight + content.offsetHeight + margin;
-        run(startHeight, endHeight, true);
-      }
-
-      function collapse() {
-        const startHeight = details.offsetHeight;
-        const endHeight = summary.offsetHeight;
-        run(startHeight, endHeight, false);
-      }
-    });
-  }
 
   // ---- Analytics: track "Buy tickets" clicks ----
   // Подключите реальные пиксели в index.html (перед </head>):

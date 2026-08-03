@@ -292,56 +292,31 @@
       <h2 class="section-title fade-in">Музыка и клипы</h2>
       <p class="section-subtitle fade-in">Новый релиз уже на всех площадках</p>
 
-      <div class="clips-carousel-wrap fade-in">
-        <div class="clips-carousel" id="clips-carousel">
-          <div class="clip-slide">
-            <button class="clip-thumb" data-video-id="9jimi5Efc0Y" aria-label="Смотреть клип «Абзал Утешов» 1">
-              <img src="https://i.ytimg.com/vi/9jimi5Efc0Y/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
-              <span class="clip-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            </button>
-          </div>
-          <div class="clip-slide">
-            <button class="clip-thumb" data-video-id="zoIS-RphZyA" aria-label="Смотреть клип «Абзал Утешов» 2">
-              <img src="https://i.ytimg.com/vi/zoIS-RphZyA/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
-              <span class="clip-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            </button>
-          </div>
-          <div class="clip-slide">
-            <button class="clip-thumb" data-video-id="2tUWM5gsl04" aria-label="Смотреть клип «Абзал Утешов» 3">
-              <img src="https://i.ytimg.com/vi/2tUWM5gsl04/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
-              <span class="clip-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-            </button>
-          </div>
-        </div>
-        <div class="carousel-controls">
-          <button class="carousel-arrow" type="button" data-carousel-dir="-1" aria-label="Предыдущий клип">
+      <div class="clip-player fade-in">
+        <div class="clip-stage" id="clip-stage"></div>
+        <div class="clip-controls">
+          <button class="clip-arrow" type="button" data-clip-dir="-1" aria-label="Предыдущий клип">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <button class="carousel-arrow" type="button" data-carousel-dir="1" aria-label="Следующий клип">
+          <span class="clip-counter" id="clip-counter">1 / 3</span>
+          <button class="clip-arrow" type="button" data-clip-dir="1" aria-label="Следующий клип">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
           </button>
         </div>
       </div>
 
-      <div class="spotify-player fade-in">
-        <iframe
-          data-testid="embed-iframe"
-          style="border-radius: 12px"
-          src="https://open.spotify.com/embed/artist/0Ju7FJOHFT7BKpTVHFt2Dh?utm_source=generator&theme=0"
-          width="100%"
-          height="352"
-          frameborder="0"
-          allowfullscreen=""
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy">
-        </iframe>
-      </div>
-
       <div class="streaming fade-in">
-        <p class="streaming-label">Слушать также на</p>
-        <div class="streaming-links">
-          <a href="https://music.apple.com/ru/artist/abzal-uteshov/1795922058" target="_blank" rel="noopener" class="streaming-link">Apple Music</a>
-          <a href="https://music.yandex.kz/artist/18951650?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener" class="streaming-link">Яндекс Музыка</a>
+        <p class="streaming-label">Слушать на всех площадках</p>
+        <div class="platform-links">
+          <a href="https://open.spotify.com/artist/0Ju7FJOHFT7BKpTVHFt2Dh?si=u062SGEcTO-8nJscYswP_Q" target="_blank" rel="noopener" aria-label="Spotify" class="platform-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.9-9.3-1-.4.1-.7-.1-.8-.5-.1-.4.1-.7.5-.8 4-.9 7.5-.5 10.3 1.2.3.2.4.6.2.9zm1.2-2.8c-.2.4-.7.5-1.1.3-2.9-1.8-7.3-2.3-10.7-1.2-.4.1-.9-.1-1-.5-.1-.4.1-.9.5-1 3.9-1.2 8.7-.6 12 1.4.4.2.5.7.3 1zm.1-2.9C14.3 8.6 8.9 8.4 5.8 9.3c-.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.6-1.1 9.6-.9 13.4 1.3.5.3.6.9.3 1.3-.3.4-.9.5-1.3.2z"/></svg>
+          </a>
+          <a href="https://music.apple.com/ru/artist/abzal-uteshov/1795922058" target="_blank" rel="noopener" aria-label="Apple Music" class="platform-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.7 12.4c0-2.8 2.3-4.2 2.4-4.2-1.3-1.9-3.3-2.2-4-2.2-1.7-.2-3.3 1-4.2 1-.9 0-2.2-1-3.6-1C5.5 6 3.8 7 2.9 8.6c-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.3 2.6 1.3-.1 1.8-.9 3.4-.9s2 .9 3.4.8c1.4 0 2.3-1.3 3.2-2.5.7-1 1.2-2.1 1.6-3.2-2.6-.9-3.4-4-3.4-4zM13.8 4.5c.7-.9 1.2-2.1 1-3.3-1 0-2.3.7-3 1.6-.6.8-1.2 2-.9 3.1 1.1.1 2.2-.5 2.9-1.4z"/></svg>
+          </a>
+          <a href="https://music.yandex.kz/artist/18951650?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener" aria-label="Яндекс Музыка" class="platform-link">
+            <svg viewBox="0 0 24 24"><text x="12" y="17.5" text-anchor="middle" font-size="16" font-weight="700" fill="currentColor">Я</text></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -354,35 +329,71 @@
       <div class="faq-block fade-in">
         <h2 class="section-title section-title-left">Вопросы по билетам</h2>
 
-        <details class="faq-item">
-          <summary>Нужно ли распечатывать билет?</summary>
-          <p>Нет, достаточно показать электронный билет с экрана телефона на входе.</p>
-        </details>
+        <div class="faq-item">
+          <button class="faq-summary" type="button" aria-expanded="false" aria-controls="faq-panel-1">
+            <span>Нужно ли распечатывать билет?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-panel-1">
+            <div class="faq-panel-inner">
+              <p>Нет, достаточно показать электронный билет с экрана телефона на входе.</p>
+            </div>
+          </div>
+        </div>
 
-        <details class="faq-item">
-          <summary>Со скольки лет можно на концерт?</summary>
-          <p>Вход разрешён без возрастных ограничений, детям до 7 лет — только в сопровождении взрослых.</p>
-        </details>
+        <div class="faq-item">
+          <button class="faq-summary" type="button" aria-expanded="false" aria-controls="faq-panel-2">
+            <span>Со скольки лет можно на концерт?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-panel-2">
+            <div class="faq-panel-inner">
+              <p>Вход разрешён без возрастных ограничений, детям до 7 лет — только в сопровождении взрослых.</p>
+            </div>
+          </div>
+        </div>
 
-        <details class="faq-item">
-          <summary>Кому писать, если билет не пришёл на почту?</summary>
-          <p>Напишите Акжолу в <a href="https://wa.me/77757927594?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%D0%B1%D0%B5.%20%D0%90%D0%B1%D0%B7%D0%B0%D0%BB%20%D0%A3%D1%82%D0%B5%D1%88%D0%BE%D0%B2%D1%82%D1%96%D2%A3%20%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D1%80%D1%82%D1%96%20%D0%B1%D0%BE%D0%B9%D1%8B%D0%BD%D1%88%D0%B0%20%D0%B6%D0%B0%D0%B7%D1%8B%D0%BF%20%D1%82%D2%B1%D1%80%20%D0%B5%D0%B4%D1%96%D0%BC" target="_blank" rel="noopener">WhatsApp</a> — поможет с любым вопросом по билетам и туру.</p>
-        </details>
+        <div class="faq-item">
+          <button class="faq-summary" type="button" aria-expanded="false" aria-controls="faq-panel-3">
+            <span>Кому писать, если билет не пришёл на почту?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-panel-3">
+            <div class="faq-panel-inner">
+              <p>Напишите Акжолу в <a href="https://wa.me/77757927594?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%D0%B1%D0%B5.%20%D0%90%D0%B1%D0%B7%D0%B0%D0%BB%20%D0%A3%D1%82%D0%B5%D1%88%D0%BE%D0%B2%D1%82%D1%96%D2%A3%20%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D1%80%D1%82%D1%96%20%D0%B1%D0%BE%D0%B9%D1%8B%D0%BD%D1%88%D0%B0%20%D0%B6%D0%B0%D0%B7%D1%8B%D0%BF%20%D1%82%D2%B1%D1%80%20%D0%B5%D0%B4%D1%96%D0%BC" target="_blank" rel="noopener">WhatsApp</a> — поможет с любым вопросом по билетам и туру.</p>
+            </div>
+          </div>
+        </div>
 
-        <details class="faq-item">
-          <summary>Можно ли вернуть билет?</summary>
-          <p>Возврат и обмен билетов осуществляется согласно правилам билетного оператора, у которого была совершена покупка.</p>
-        </details>
+        <div class="faq-item">
+          <button class="faq-summary" type="button" aria-expanded="false" aria-controls="faq-panel-4">
+            <span>Можно ли вернуть билет?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-panel" id="faq-panel-4">
+            <div class="faq-panel-inner">
+              <p>Возврат и обмен билетов осуществляется согласно правилам билетного оператора, у которого была совершена покупка.</p>
+            </div>
+          </div>
+        </div>
 
         <a href="https://wa.me/77757927594?text=%D0%A1%D3%99%D0%BB%D0%B5%D0%BC%D0%B5%D1%82%D1%81%D1%96%D0%B7%D0%B1%D0%B5.%20%D0%90%D0%B1%D0%B7%D0%B0%D0%BB%20%D0%A3%D1%82%D0%B5%D1%88%D0%BE%D0%B2%D1%82%D1%96%D2%A3%20%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D1%80%D1%82%D1%96%20%D0%B1%D0%BE%D0%B9%D1%8B%D0%BD%D1%88%D0%B0%20%D0%B6%D0%B0%D0%B7%D1%8B%D0%BF%20%D1%82%D2%B1%D1%80%20%D0%B5%D0%B4%D1%96%D0%BC" target="_blank" rel="noopener" class="btn btn-outline btn-small faq-contact-btn">Остались вопросы? Написать в WhatsApp</a>
       </div>
 
       <div class="booking-block fade-in" id="booking">
-        <h2 class="section-title section-title-left">Организация концертов и сотрудничество</h2>
-        <p class="booking-manager">Менеджер: Маруф</p>
-        <div class="booking-social">
-          <a href="https://wa.me/77786198980" target="_blank" rel="noopener" class="btn btn-outline btn-small">WhatsApp</a>
+        <div class="booking-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
         </div>
+        <h2 class="section-title section-title-left">Организация концертов и сотрудничество</h2>
+        <p class="booking-text">Букинг, коллаборации и спецпроекты — пишите напрямую менеджеру.</p>
+        <div class="booking-contact">
+          <span class="booking-name">Маруф</span>
+          <span class="booking-role">Менеджер по букингу</span>
+        </div>
+        <a href="https://wa.me/77786198980" target="_blank" rel="noopener" class="btn btn-outline btn-large booking-cta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.4-.12-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.14-.01-.31-.01-.48-.01a.92.92 0 0 0-.67.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+          Написать в WhatsApp
+        </a>
       </div>
 
     </div>
