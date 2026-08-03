@@ -28,12 +28,17 @@ python3 -m http.server 8000
    `background: url('../img/hero.jpg') center/cover no-repeat;`,
    либо подключите `<video>` вместо `<div class="hero-media-placeholder">`
    в `index.html`.
-2. **График тура** — блок `#tour` в `index.html`. Каждый город — это
-   `<li class="tour-item fade-in">`, копируйте/редактируйте вручную.
-   Для статуса «Продано» добавьте класс `is-sold-out` и замените кнопку на
-   `<button class="btn btn-disabled tour-btn" disabled>Продано</button>`.
-3. **Ссылки на билетного оператора** (Ticketon / Яндекс Афиша) — вставьте
-   реальные `href` в кнопки «Билеты».
+2. **График тура** — блок `#tour` в `index.html` уже заполнен реальными
+   датами (Қызылорда — Алматы, 5–26 сентября) со ссылками на 2GIS и
+   билетного оператора sxodim.com. Алматы (26 сентября) — в статусе
+   «Скоро» (билеты ещё не в продаже). Чтобы добавить новый город —
+   скопируйте `<li class="tour-item fade-in">…</li>`. Для статуса
+   «Продано» добавьте класс `is-sold-out` и замените кнопку на
+   `<button class="btn btn-disabled tour-btn" disabled>Продано</button>`,
+   для «Скоро» — класс `is-coming-soon` и кнопку с текстом «Скоро».
+3. **Ссылка на билеты для Алматы** — как только откроются продажи,
+   замените disabled-кнопку в последнем `<li>` блока `#tour` на обычную
+   ссылку с `data-track="buy-tickets"` (см. остальные города как пример).
 4. **Клип и стриминги** — в блоке `#music` замените `src` iframe на реальный
    YouTube-клип и ссылки Spotify / Apple Music / Яндекс Музыка (или общую
    мультиссылку BandLink).

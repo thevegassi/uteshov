@@ -459,16 +459,32 @@ a {
 .tour-venue {
   font-size: 13px;
   color: var(--text-muted);
+  width: fit-content;
+  transition: color 0.2s ease;
+}
+
+.tour-venue:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+.tour-time {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 .tour-btn {
   flex-shrink: 0;
   padding: 10px 18px;
   font-size: 12px;
+  text-align: center;
 }
 
 .tour-item.is-sold-out .tour-city,
-.tour-item.is-sold-out .tour-venue {
+.tour-item.is-sold-out .tour-venue,
+.tour-item.is-coming-soon .tour-city,
+.tour-item.is-coming-soon .tour-venue {
   color: var(--text-muted);
 }
 
