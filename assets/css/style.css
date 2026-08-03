@@ -502,11 +502,23 @@ a {
   border: 0;
 }
 
+.spotify-player {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.spotify-player iframe {
+  display: block;
+  width: 100%;
+}
+
 .streaming {
   text-align: center;
 }
 
-.streaming + .streaming {
+.streaming + .streaming,
+.streaming + .spotify-player,
+.spotify-player + .streaming {
   margin-top: 40px;
 }
 
