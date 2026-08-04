@@ -441,7 +441,9 @@ summary:focus-visible {
 }
 
 /* Gradient fill over the sharp photo so it reads as toned into the scene
-   rather than an overly bright/vivid cutout. */
+   rather than an overly bright/vivid cutout. Masked to the same cutout's
+   alpha channel — without this it paints as a plain rectangle and shows
+   up as a visible dark box around the transparent padding of the photo. */
 .hero-photo-shade {
   position: absolute;
   inset: 0;
@@ -453,6 +455,12 @@ summary:focus-visible {
     rgba(30, 34, 54, 0.28) 55%,
     rgba(10, 10, 10, 0.6) 100%
   );
+  -webkit-mask-image: url('../img/hero-artist.webp');
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url('../img/hero-artist.webp');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 
 /* User-provided blurred silhouette placed beside the sharp photo — an
@@ -465,9 +473,14 @@ summary:focus-visible {
 .hero-photo-shadow {
   position: absolute;
   top: 30%;
-  left: 1%;
-  width: 34%;
-  max-width: 260px;
+  /* Positioned relative to the photo's own edge (not a fixed left%), so it
+     stays close to him at any viewport width instead of drifting into a
+     wide, disconnected gap on wider screens. The photo's left edge sits at
+     (100% - center%) from the right, plus its own half-width in vh (it's
+     sized off hero height) -- this mirrors that math with a small gap. */
+  right: calc(38% + 22vh);
+  width: 18vh;
+  max-width: 190px;
   height: auto;
   z-index: 0;
   opacity: 0.85;
@@ -476,8 +489,9 @@ summary:focus-visible {
 
 @media (min-width: 768px) {
   .hero-photo-shadow {
-    left: 4%;
-    width: 30%;
+    right: calc(50% + 24vh);
+    width: 20vh;
+    max-width: 210px;
   }
 }
 
