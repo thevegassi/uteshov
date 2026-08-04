@@ -37,25 +37,7 @@ body {
   font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  /* One continuous background for the whole page: the same navy tones as
-     the Hero photo bleed down into the top of the Tour section instead of
-     hard-cutting to flat black the moment Hero ends. Hero's own opaque
-     media layer sits on top and hides this for its own height; it only
-     becomes visible in the ~45vh past Hero, exactly where the seam was. */
   background-color: var(--bg);
-  background-image: linear-gradient(
-    180deg,
-    #252a43 0%,
-    #444867 20%,
-    #526185 40%,
-    #4e5f83 55%,
-    #3f4b67 68%,
-    #202535 82%,
-    var(--bg) 100%
-  );
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: 100% 145vh;
 }
 
 /* Whole-page film grain — ties the Hero photograph and the flat UI
@@ -86,6 +68,56 @@ body::after {
   90% { transform: translate(-3%, 2%); }
 }
 
+/* ===== Splash / preload screen ===== */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.splash.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-title-img {
+  width: min(60vw, 340px);
+  height: auto;
+  opacity: 0;
+  animation: splash-reveal 1.6s ease forwards;
+}
+
+@keyframes splash-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 46px rgba(255, 255, 255, 0.4));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.15));
+  }
+}
+
+body.is-loading {
+  overflow: hidden;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -108,6 +140,18 @@ summary:focus-visible {
   max-width: var(--container-width);
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ===== Buttons ===== */
@@ -449,6 +493,79 @@ summary:focus-visible {
 
 .info {
   padding-bottom: 104px;
+}
+
+/* Hero ends on a black fade (.hero-overlay's last stop is var(--bg)); this
+   bloom starts on that exact same color so the seam disappears, blooms into
+   the Hero's navy palette, then mirrors back down to var(--bg) — a
+   continuation of Hero's own gradient instead of a hard cut. Anchored to
+   the Tour section's own top (not a vh offset from the page) so it lines
+   up with Hero's bottom regardless of Hero's actual rendered height. */
+.tour {
+  z-index: 0;
+}
+
+.tour::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65vh;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(
+    180deg,
+    var(--bg) 0%,
+    #202535 14%,
+    #3f4b67 32%,
+    #4e5f83 50%,
+    #3f4b67 68%,
+    #202535 86%,
+    var(--bg) 100%
+  );
+}
+
+/* ===== Tour marquee ===== */
+
+.tour-marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+  margin-bottom: 56px;
+  user-select: none;
+}
+
+.tour-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: tour-marquee-scroll 24s linear infinite;
+}
+
+.tour-marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.tour-marquee-group span {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 7vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  padding: 0 20px;
+}
+
+.tour-marquee-group span:nth-child(even) {
+  color: var(--accent);
+}
+
+@keyframes tour-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 .section-title {
@@ -1060,6 +1177,12 @@ summary:focus-visible {
     animation: none;
   }
   .hero-media-glow {
+    animation: none;
+  }
+  .tour-marquee-track {
+    animation: none;
+  }
+  .splash-title-img {
     animation: none;
   }
 }

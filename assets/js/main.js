@@ -1,6 +1,35 @@
 (() => {
   'use strict';
 
+  // ---- Splash / preload screen ----
+  (function initSplash() {
+    const splash = document.getElementById('splash');
+    if (!splash) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const minDisplay = prefersReduced ? 0 : 1300;
+    const start = Date.now();
+    let hidden = false;
+
+    function hide() {
+      if (hidden) return;
+      hidden = true;
+      splash.classList.add('is-hidden');
+      document.body.classList.remove('is-loading');
+      setTimeout(() => splash.remove(), 700);
+    }
+
+    document.body.classList.add('is-loading');
+
+    window.addEventListener('load', () => {
+      const elapsed = Date.now() - start;
+      setTimeout(hide, Math.max(0, minDisplay - elapsed));
+    });
+
+    // Safety net in case the load event never fires (slow/blocked resource).
+    setTimeout(hide, 4000);
+  })();
+
   // ---- Header background on scroll ----
   const header = document.getElementById('site-header');
   const onScroll = () => {
