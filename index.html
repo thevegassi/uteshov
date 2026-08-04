@@ -96,7 +96,11 @@
     <div class="hero-media" aria-hidden="true">
       <div class="hero-media-glow"></div>
       <img src="assets/img/hero-artist.webp" alt="" class="hero-photo hero-photo--glow" width="813" height="1329">
-      <img src="assets/img/hero-artist.webp" alt="" class="hero-photo" width="813" height="1329">
+      <img src="assets/img/hero-artist-shadow.webp" alt="" class="hero-photo-shadow" width="1080" height="1350">
+      <div class="hero-photo-wrap">
+        <img src="assets/img/hero-artist.webp" alt="" class="hero-photo" width="813" height="1329">
+        <div class="hero-photo-shade"></div>
+      </div>
     </div>
     <div class="hero-overlay"></div>
 
@@ -151,30 +155,20 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="countdown fade-in" id="countdown">
-        <p class="countdown-label">До начала тура</p>
-        <div class="countdown-timer">
-          <div class="countdown-unit">
-            <span class="countdown-value" id="cd-days">00</span>
-            <span class="countdown-unit-label">дней</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-value" id="cd-hours">00</span>
-            <span class="countdown-unit-label">часов</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-value" id="cd-mins">00</span>
-            <span class="countdown-unit-label">минут</span>
-          </div>
-          <div class="countdown-unit">
-            <span class="countdown-value" id="cd-secs">00</span>
-            <span class="countdown-unit-label">секунд</span>
-          </div>
+    <div class="countdown-bar fade-in" id="countdown">
+      <div class="container countdown-bar-inner">
+        <span class="countdown-bar-label">До начала тура</span>
+        <div class="countdown-bar-time">
+          <span><strong id="cd-days">00</strong><small>дней</small></span>
+          <span><strong id="cd-hours">00</strong><small>часов</small></span>
+          <span><strong id="cd-mins">00</strong><small>минут</small></span>
+          <span><strong id="cd-secs">00</strong><small>секунд</small></span>
         </div>
-        <p class="countdown-city" id="countdown-city"></p>
+        <span class="countdown-bar-city" id="countdown-city"></span>
       </div>
+    </div>
 
+    <div class="container">
       <ul class="tour-list">
 
         <li class="tour-item fade-in" data-date="2026-09-05T19:00:00+05:00">

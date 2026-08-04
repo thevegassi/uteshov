@@ -385,36 +385,89 @@ summary:focus-visible {
 }
 
 .hero-photo {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 64%;
+  display: block;
   width: auto;
   max-width: none;
+  height: 100%;
   object-fit: contain;
   object-position: bottom;
-  z-index: 1;
   /* Slight desaturation/contrast so the crisp cutout reads as part of the
      scene rather than a flat sticker pasted over the background. */
   filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55)) saturate(0.92) contrast(1.04);
-}
-
-@media (min-width: 768px) {
-  .hero-photo {
-    height: 68%;
-  }
 }
 
 /* Blurred, scaled-up duplicate sitting behind the sharp photo — an ambient
    glow that helps the subject blend into the background instead of
    standing out as a sharp cutout. Same source image, no extra asset. */
 .hero-photo--glow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: 64%;
   transform: translateX(-50%) scale(1.18);
   z-index: 0;
   filter: blur(50px) saturate(1.5) brightness(1.15);
   opacity: 0.55;
   mix-blend-mode: screen;
+}
+
+@media (min-width: 768px) {
+  .hero-photo--glow {
+    height: 68%;
+  }
+}
+
+/* Wraps the sharp photo so .hero-photo-shade can tint it with a gradient
+   without affecting the blurred glow duplicate or the shadow image. */
+.hero-photo-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 64%;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .hero-photo-wrap {
+    height: 68%;
+  }
+}
+
+/* Gradient fill over the sharp photo so it reads as toned into the scene
+   rather than an overly bright/vivid cutout. */
+.hero-photo-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image: linear-gradient(
+    180deg,
+    rgba(37, 42, 67, 0) 0%,
+    rgba(30, 34, 54, 0.28) 55%,
+    rgba(10, 10, 10, 0.6) 100%
+  );
+}
+
+/* User-provided blurred silhouette placed beside the sharp photo — an
+   ambient echo/shadow, distinct from the centered glow duplicate above. */
+.hero-photo-shadow {
+  position: absolute;
+  bottom: 3%;
+  left: 4%;
+  width: 46%;
+  max-width: 360px;
+  height: auto;
+  z-index: 0;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+@media (max-width: 479px) {
+  .hero-photo-shadow {
+    width: 38%;
+    left: 0;
+  }
 }
 
 .hero-overlay {
@@ -495,12 +548,14 @@ summary:focus-visible {
   padding-bottom: 104px;
 }
 
-/* Hero ends on a black fade (.hero-overlay's last stop is var(--bg)); this
-   bloom starts on that exact same color so the seam disappears, blooms into
-   the Hero's navy palette, then mirrors back down to var(--bg) — a
-   continuation of Hero's own gradient instead of a hard cut. Anchored to
-   the Tour section's own top (not a vh offset from the page) so it lines
-   up with Hero's bottom regardless of Hero's actual rendered height. */
+/* Continuation of Hero's own background instead of a synthetic color
+   fade: the same hero-bg.webp, flipped vertically, bleeding into the top
+   of Tour — a literal mirror/duplicate of Hero's image, not a lookalike
+   gradient. ::after sits above it and hides the seam (opaque at the very
+   top, matching Hero's own black fade) before dissolving to reveal the
+   mirrored image, then fading back to flat var(--bg) beneath. Anchored to
+   the Tour section's own top so it lines up with Hero's bottom regardless
+   of Hero's actual rendered height. */
 .tour {
   z-index: 0;
 }
@@ -512,16 +567,28 @@ summary:focus-visible {
   left: 0;
   right: 0;
   height: 65vh;
+  z-index: -2;
+  pointer-events: none;
+  background: #20253b url('../img/hero-bg.webp') center / cover no-repeat;
+  transform: scaleY(-1);
+}
+
+.tour::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65vh;
   z-index: -1;
   pointer-events: none;
   background-image: linear-gradient(
     180deg,
     var(--bg) 0%,
-    #202535 14%,
-    #3f4b67 32%,
-    #4e5f83 50%,
-    #3f4b67 68%,
-    #202535 86%,
+    rgba(10, 10, 10, 0.55) 12%,
+    rgba(10, 10, 10, 0.1) 30%,
+    rgba(10, 10, 10, 0.1) 55%,
+    rgba(10, 10, 10, 0.6) 82%,
     var(--bg) 100%
   );
 }
@@ -560,7 +627,7 @@ summary:focus-visible {
 }
 
 .tour-marquee-group span:nth-child(even) {
-  color: var(--accent);
+  color: var(--text-muted);
 }
 
 @keyframes tour-marquee-scroll {
@@ -601,60 +668,54 @@ summary:focus-visible {
 
 /* ===== Countdown ===== */
 
-.countdown {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 18px;
-  padding: 28px 32px;
-  background: var(--bg-elevated);
-  border-radius: 16px;
-  margin-bottom: 48px;
+.countdown-bar {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
 }
 
-.countdown-label {
+.countdown-bar-inner {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.countdown-bar-label {
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-muted);
-  margin: 0;
 }
 
-.countdown-timer {
+.countdown-bar-time {
   display: flex;
-  gap: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.countdown-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 44px;
-}
-
-.countdown-value {
+.countdown-bar-time strong {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 36px;
-  line-height: 1;
-  color: var(--accent);
+  font-size: 20px;
   font-variant-numeric: tabular-nums;
+  margin-right: 4px;
 }
 
-.countdown-unit-label {
-  font-size: 11px;
+.countdown-bar-time small {
+  font-size: 12px;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 6px;
+  letter-spacing: 0.04em;
 }
 
-.countdown-city {
+.countdown-bar-city {
+  margin-left: auto;
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
-  margin: 0;
 }
 
 /* ===== Tour dates ===== */
