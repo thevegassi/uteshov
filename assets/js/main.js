@@ -35,14 +35,6 @@
     setTimeout(hide, 4000);
   })();
 
-  // ---- Header background on scroll ----
-  const header = document.getElementById('site-header');
-  const onScroll = () => {
-    header.classList.toggle('is-scrolled', window.scrollY > 10);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
   // ---- Mobile nav toggle ----
   const navToggle = document.getElementById('nav-toggle');
   const mainNav = document.getElementById('main-nav');
