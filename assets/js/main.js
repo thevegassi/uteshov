@@ -76,6 +76,55 @@
     timer = setInterval(tick, 1000);
   })();
 
+  // ---- "Days remaining" badge on every tour row ----
+  (function initTourRemaining() {
+    const items = Array.from(document.querySelectorAll('.tour-item[data-date]'))
+      .map((el) => ({ el, badge: el.querySelector('[data-remaining]'), date: new Date(el.dataset.date) }))
+      .filter((item) => item.badge && !Number.isNaN(item.date.getTime()));
+
+    if (items.length === 0) return;
+
+    function pluralDays(n) {
+      const mod10 = n % 10;
+      const mod100 = n % 100;
+      if (mod10 === 1 && mod100 !== 11) return 'день';
+      if ([2, 3, 4].includes(mod10) && ![12, 13, 14].includes(mod100)) return 'дня';
+      return 'дней';
+    }
+
+    function startOfDay(date) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    }
+
+    function update() {
+      const today = startOfDay(new Date());
+      items.forEach(({ badge, date }) => {
+        const diffDays = Math.round((startOfDay(date) - today) / 86400000);
+        let text;
+        let isSoon = false;
+
+        if (diffDays < 0) {
+          text = 'Прошло';
+        } else if (diffDays === 0) {
+          text = 'Сегодня';
+          isSoon = true;
+        } else if (diffDays === 1) {
+          text = 'Завтра';
+          isSoon = true;
+        } else {
+          text = `Через ${diffDays} ${pluralDays(diffDays)}`;
+          isSoon = diffDays <= 7;
+        }
+
+        badge.textContent = text;
+        badge.classList.toggle('is-soon', isSoon);
+      });
+    }
+
+    update();
+    setInterval(update, 60000);
+  })();
+
   // ---- Fade-in on scroll ----
   const fadeEls = document.querySelectorAll('.fade-in');
 
