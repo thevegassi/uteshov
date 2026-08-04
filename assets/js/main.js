@@ -1,6 +1,11 @@
 (() => {
   'use strict';
 
+  // ---- Always resume on Hero, even after a back/forward (bfcache) restore ----
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) window.scrollTo(0, 0);
+  });
+
   // ---- Splash / preload screen ----
   (function initSplash() {
     const splash = document.getElementById('splash');

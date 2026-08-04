@@ -16,8 +16,14 @@
   --gis-green: #2ecc71;
   --gis-green-hover: #4cde85;
 
-  --font-heading: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  /* Bebas Neue has no Cyrillic glyphs (Latin/Latin-ext only) — it's used
+     only for pure-numeral display (day-of-month, countdown digits), never
+     for Cyrillic headings/labels, where it would silently fall back and
+     mismatch mid-word. Montserrat covers Cyrillic fully and carries the
+     rest of the display/heading role. */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
 
   --container-width: 1280px;
   --header-height: 64px;
@@ -37,7 +43,19 @@ body {
   font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* Continuous background for the entire page, not just Hero: a tile made
+     of hero-bg.webp stacked with its own vertical mirror (so consecutive
+     repeats share an edge and there's no visible seam), repeating for the
+     full height of the document. A flat dark scrim layers on top so it
+     reads as atmosphere behind every section rather than a busy photo,
+     while never flattening out to solid black anywhere on the page. */
   background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(8, 10, 18, 0.6), rgba(8, 10, 18, 0.6)),
+    url('../img/bg-mirror-tile.webp');
+  background-repeat: no-repeat, repeat-y;
+  background-position: top, top center;
+  background-size: 100% 100%, 100% auto;
 }
 
 /* Whole-page film grain — ties the Hero photograph and the flat UI
@@ -227,15 +245,13 @@ summary:focus-visible {
   height: var(--header-height);
   display: flex;
   align-items: center;
-  background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+  transition: background-color 0.3s ease;
 }
 
 .site-header.is-scrolled {
-  background: rgba(10, 10, 10, 0.9);
+  background-color: rgba(10, 10, 10, 0.9);
   backdrop-filter: blur(8px);
-  border-bottom-color: var(--border);
 }
 
 .header-inner {
@@ -441,7 +457,9 @@ summary:focus-visible {
 }
 
 /* Gradient fill over the sharp photo so it reads as toned into the scene
-   rather than an overly bright/vivid cutout. */
+   rather than an overly bright/vivid cutout. Masked to the same cutout's
+   alpha channel — without this it paints as a plain rectangle and shows
+   up as a visible dark box around the transparent padding of the photo. */
 .hero-photo-shade {
   position: absolute;
   inset: 0;
@@ -453,6 +471,12 @@ summary:focus-visible {
     rgba(30, 34, 54, 0.28) 55%,
     rgba(10, 10, 10, 0.6) 100%
   );
+  -webkit-mask-image: url('../img/hero-artist.webp');
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url('../img/hero-artist.webp');
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 
 /* User-provided blurred silhouette placed beside the sharp photo — an
@@ -465,9 +489,14 @@ summary:focus-visible {
 .hero-photo-shadow {
   position: absolute;
   top: 30%;
-  left: 1%;
-  width: 34%;
-  max-width: 260px;
+  /* Positioned relative to the photo's own edge (not a fixed left%), so it
+     stays close to him at any viewport width instead of drifting into a
+     wide, disconnected gap on wider screens. The photo's left edge sits at
+     (100% - center%) from the right, plus its own half-width in vh (it's
+     sized off hero height) -- this mirrors that math with a small gap. */
+  right: calc(38% + 22vh);
+  width: 18vh;
+  max-width: 190px;
   height: auto;
   z-index: 0;
   opacity: 0.85;
@@ -476,8 +505,9 @@ summary:focus-visible {
 
 @media (min-width: 768px) {
   .hero-photo-shadow {
-    left: 4%;
-    width: 30%;
+    right: calc(50% + 24vh);
+    width: 20vh;
+    max-width: 210px;
   }
 }
 
@@ -559,14 +589,14 @@ summary:focus-visible {
   padding-bottom: 104px;
 }
 
-/* Continuation of Hero's own background instead of a synthetic color
-   fade: the same hero-bg.webp, flipped vertically, bleeding into the top
-   of Tour — a literal mirror/duplicate of Hero's image, not a lookalike
-   gradient. ::after sits above it and hides the seam (opaque at the very
-   top, matching Hero's own black fade) before dissolving to reveal the
-   mirrored image, then fading back to flat var(--bg) beneath. Anchored to
-   the Tour section's own top so it lines up with Hero's bottom regardless
-   of Hero's actual rendered height. */
+/* Hero renders its own hero-bg.webp independently (sized to fill its own
+   box via "cover"), so it can't line up pixel-for-pixel with body's
+   continuous tiled background below. Rather than chase an exact match,
+   this hides the handoff: opaque at var(--bg) right where Hero's own fade
+   ends, dissolving to fully transparent so body's tiled background (which
+   is already there underneath) takes over smoothly. Everything past this
+   short zone is body's background alone — no further per-section masking
+   needed, since the tile already runs the full height of the document. */
 .tour {
   z-index: 0;
 }
@@ -577,31 +607,10 @@ summary:focus-visible {
   top: 0;
   left: 0;
   right: 0;
-  height: 65vh;
-  z-index: -2;
-  pointer-events: none;
-  background: #20253b url('../img/hero-bg.webp') center / cover no-repeat;
-  transform: scaleY(-1);
-}
-
-.tour::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 65vh;
+  height: 30vh;
   z-index: -1;
   pointer-events: none;
-  background-image: linear-gradient(
-    180deg,
-    var(--bg) 0%,
-    rgba(10, 10, 10, 0.55) 12%,
-    rgba(10, 10, 10, 0.1) 30%,
-    rgba(10, 10, 10, 0.1) 55%,
-    rgba(10, 10, 10, 0.6) 82%,
-    var(--bg) 100%
-  );
+  background-image: linear-gradient(180deg, var(--bg) 0%, transparent 100%);
 }
 
 /* ===== Tour marquee ===== */
@@ -708,9 +717,9 @@ summary:focus-visible {
 }
 
 .countdown-bar-time strong {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 20px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 24px;
   font-variant-numeric: tabular-nums;
   margin-right: 4px;
 }
@@ -760,11 +769,11 @@ summary:focus-visible {
 }
 
 .tour-day {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 38px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 44px;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
 }
 
@@ -793,8 +802,16 @@ summary:focus-visible {
 
 .tour-city {
   font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 17px;
+  font-weight: 800;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 640px) {
+  .tour-city {
+    font-size: 28px;
+  }
 }
 
 .tour-remaining {
@@ -870,6 +887,40 @@ summary:focus-visible {
 @media (min-width: 640px) {
   .tour-item {
     padding: 24px 8px;
+  }
+}
+
+/* Below 640px the one-row layout leaves too little width for the info
+   column once the fixed date column and button are accounted for — at the
+   larger, bold, uppercase city-name size that overflows instead of
+   wrapping (single unbreakable word). Stack the row instead of squeezing
+   it horizontally. */
+@media (max-width: 639px) {
+  .tour-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .tour-date {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    width: auto;
+  }
+
+  .tour-month {
+    margin-top: 0;
+  }
+
+  .tour-info {
+    flex: none;
+    width: 100%;
+  }
+
+  .tour-btn {
+    margin-left: 0;
+    align-self: flex-start;
   }
 }
 
@@ -1213,7 +1264,7 @@ summary:focus-visible {
   color: #5a5a56;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 900px) {
   .footer-inner {
     flex-direction: row;
     justify-content: space-between;
