@@ -33,11 +33,29 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  /* One continuous background for the whole page: the same navy tones as
+     the Hero photo bleed down into the top of the Tour section instead of
+     hard-cutting to flat black the moment Hero ends. Hero's own opaque
+     media layer sits on top and hides this for its own height; it only
+     becomes visible in the ~45vh past Hero, exactly where the seam was. */
+  background-color: var(--bg);
+  background-image: linear-gradient(
+    180deg,
+    #252a43 0%,
+    #444867 20%,
+    #526185 40%,
+    #4e5f83 55%,
+    #3f4b67 68%,
+    #202535 82%,
+    var(--bg) 100%
+  );
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: 100% 145vh;
 }
 
 /* Whole-page film grain — ties the Hero photograph and the flat UI
@@ -45,13 +63,27 @@ body {
 body::after {
   content: '';
   position: fixed;
-  inset: 0;
+  inset: -20px;
   z-index: 999;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.05;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
+  animation: grain-flicker 8s steps(8) infinite;
+}
+
+@keyframes grain-flicker {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -4%); }
+  20% { transform: translate(-6%, 2%); }
+  30% { transform: translate(4%, -2%); }
+  40% { transform: translate(-2%, 6%); }
+  50% { transform: translate(-6%, -3%); }
+  60% { transform: translate(6%, 3%); }
+  70% { transform: translate(0%, 4%); }
+  80% { transform: translate(3%, -6%); }
+  90% { transform: translate(-3%, 2%); }
 }
 
 img {
@@ -298,8 +330,14 @@ summary:focus-visible {
 
 .hero-media-glow {
   position: absolute;
-  inset: 0;
+  inset: -10px;
   background: #20253b url('../img/hero-bg.webp') center / cover no-repeat;
+  animation: hero-breathe 12s ease-in-out infinite;
+}
+
+@keyframes hero-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
 }
 
 .hero-photo {
@@ -313,13 +351,26 @@ summary:focus-visible {
   object-fit: contain;
   object-position: bottom;
   z-index: 1;
-  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55));
+  /* Slight desaturation/contrast so the crisp cutout reads as part of the
+     scene rather than a flat sticker pasted over the background. */
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55)) saturate(0.92) contrast(1.04);
 }
 
 @media (min-width: 768px) {
   .hero-photo {
     height: 68%;
   }
+}
+
+/* Blurred, scaled-up duplicate sitting behind the sharp photo — an ambient
+   glow that helps the subject blend into the background instead of
+   standing out as a sharp cutout. Same source image, no extra asset. */
+.hero-photo--glow {
+  transform: translateX(-50%) scale(1.18);
+  z-index: 0;
+  filter: blur(50px) saturate(1.5) brightness(1.15);
+  opacity: 0.55;
+  mix-blend-mode: screen;
 }
 
 .hero-overlay {
@@ -392,17 +443,6 @@ summary:focus-visible {
   padding: 80px 0 96px;
 }
 
-/* Soft top-glow seam instead of a flat ruled line — echoes the Hero's
-   light source so sections read as one continuous scene, not stacked cards. */
-.section::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 160px;
-  background: radial-gradient(ellipse 60% 100% at 50% 0%, rgba(255, 255, 255, 0.05), transparent 70%);
-  pointer-events: none;
-}
-
 .music {
   padding-top: 96px;
 }
@@ -442,13 +482,70 @@ summary:focus-visible {
   }
 }
 
+/* ===== Countdown ===== */
+
+.countdown {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 28px 32px;
+  background: var(--bg-elevated);
+  border-radius: 16px;
+  margin-bottom: 48px;
+}
+
+.countdown-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.countdown-timer {
+  display: flex;
+  gap: 24px;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 44px;
+}
+
+.countdown-value {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-unit-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+}
+
+.countdown-city {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+
 /* ===== Tour dates ===== */
 
 .tour-list {
   list-style: none;
-  margin: 0 auto 0 0;
+  margin: 0;
   padding: 0;
-  max-width: 920px;
   border-top: 1px solid var(--border);
 }
 
@@ -494,14 +591,40 @@ summary:focus-visible {
 .tour-info {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0 1 520px;
   min-width: 0;
+}
+
+.tour-city-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .tour-city {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 17px;
+}
+
+.tour-remaining {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.tour-remaining.is-soon {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .tour-venue {
@@ -537,6 +660,7 @@ summary:focus-visible {
 
 .tour-btn {
   flex-shrink: 0;
+  margin-left: auto;
   padding: 10px 18px;
   font-size: 12px;
   text-align: center;
@@ -549,6 +673,11 @@ summary:focus-visible {
   color: var(--text-muted);
 }
 
+.tour-item.is-sold-out .tour-remaining,
+.tour-item.is-coming-soon .tour-remaining {
+  display: none;
+}
+
 @media (min-width: 640px) {
   .tour-item {
     padding: 24px 8px;
@@ -557,14 +686,27 @@ summary:focus-visible {
 
 /* ===== Music ===== */
 
-.clip-player {
-  margin: 0 0 48px;
+.music-grid {
+  display: grid;
+  gap: 40px;
+}
+
+@media (min-width: 900px) {
+  .music-grid {
+    grid-template-columns: 1.3fr 0.9fr;
+    align-items: start;
+  }
+}
+
+.music-side {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .clip-stage {
   position: relative;
   width: 100%;
-  max-width: 960px;
   aspect-ratio: 16 / 9;
   border-radius: 16px;
   overflow: hidden;
@@ -666,23 +808,11 @@ summary:focus-visible {
 
 .spotify-player {
   width: 100%;
-  max-width: 960px;
-  margin: 32px 0 40px;
 }
 
 .spotify-player iframe {
   display: block;
   width: 100%;
-}
-
-.streaming {
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .streaming {
-    text-align: left;
-  }
 }
 
 .streaming-label {
@@ -693,14 +823,8 @@ summary:focus-visible {
 
 .platform-links {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 26px;
-}
-
-@media (min-width: 768px) {
-  .platform-links {
-    justify-content: flex-start;
-  }
 }
 
 .platform-link {
@@ -931,5 +1055,11 @@ summary:focus-visible {
   }
   html {
     scroll-behavior: auto;
+  }
+  body::after {
+    animation: none;
+  }
+  .hero-media-glow {
+    animation: none;
   }
 }
