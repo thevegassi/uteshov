@@ -411,12 +411,6 @@ summary:focus-visible {
   mix-blend-mode: screen;
 }
 
-@media (min-width: 768px) {
-  .hero-photo--glow {
-    height: 68%;
-  }
-}
-
 /* Wraps the sharp photo so .hero-photo-shade can tint it with a gradient
    without affecting the blurred glow duplicate or the shadow image. */
 .hero-photo-wrap {
@@ -428,7 +422,19 @@ summary:focus-visible {
   z-index: 1;
 }
 
+/* Below this, the sharp photo alone (at full requested size) leaves almost
+   no horizontal clearance beside it — nowhere for the shadow image to
+   actually show. Shift the photo (and its glow) right instead of shrinking
+   it, opening up real room on the left for the shadow. */
+@media (max-width: 767px) {
+  .hero-photo--glow,
+  .hero-photo-wrap {
+    left: 62%;
+  }
+}
+
 @media (min-width: 768px) {
+  .hero-photo--glow,
   .hero-photo-wrap {
     height: 68%;
   }
@@ -450,23 +456,28 @@ summary:focus-visible {
 }
 
 /* User-provided blurred silhouette placed beside the sharp photo — an
-   ambient echo/shadow, distinct from the centered glow duplicate above. */
+   ambient echo/shadow, distinct from the centered glow duplicate above.
+   Cropped tight to its own content (no dead transparent margin) so the
+   sizing below maps directly to visible pixels. Anchored from the top so
+   its lighter (face/neck) end lines up with the artist's head instead of
+   sinking into the already-dark area near the bottom of Hero, where its
+   own dark half would disappear against the background. */
 .hero-photo-shadow {
   position: absolute;
-  bottom: 3%;
-  left: 4%;
-  width: 46%;
-  max-width: 360px;
+  top: 30%;
+  left: 1%;
+  width: 34%;
+  max-width: 260px;
   height: auto;
   z-index: 0;
   opacity: 0.85;
   pointer-events: none;
 }
 
-@media (max-width: 479px) {
+@media (min-width: 768px) {
   .hero-photo-shadow {
-    width: 38%;
-    left: 0;
+    left: 4%;
+    width: 30%;
   }
 }
 
