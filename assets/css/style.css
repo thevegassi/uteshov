@@ -471,13 +471,18 @@ summary:focus-visible {
 .hero-photo-shadow {
   position: absolute;
   top: 34%;
-  left: calc(50% + 6vh);
+  left: calc(50% + 1vh);
   width: 24vh;
   max-width: 240px;
   height: auto;
   z-index: 0;
   opacity: 0.9;
   pointer-events: none;
+  /* Feathers the image's own hard rectangular crop edge into transparency
+     instead of showing a visible straight-line cutoff where it peeks out
+     from behind the photo. */
+  -webkit-mask-image: radial-gradient(ellipse 65% 60% at 40% 45%, #000 45%, transparent 82%);
+  mask-image: radial-gradient(ellipse 65% 60% at 40% 45%, #000 45%, transparent 82%);
 }
 
 .hero-overlay {
