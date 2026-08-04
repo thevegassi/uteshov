@@ -470,7 +470,7 @@ summary:focus-visible {
    photo's right edge shows. */
 .hero-photo-shadow {
   position: absolute;
-  top: 34%;
+  top: 27%;
   left: calc(50% + 1vh);
   width: 24vh;
   max-width: 240px;
