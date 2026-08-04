@@ -246,12 +246,6 @@ summary:focus-visible {
   display: flex;
   align-items: center;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-  transition: background-color 0.3s ease;
-}
-
-.site-header.is-scrolled {
-  background-color: rgba(10, 10, 10, 0.9);
-  backdrop-filter: blur(8px);
 }
 
 .header-inner {
@@ -440,12 +434,22 @@ summary:focus-visible {
 
 /* Below this, the sharp photo alone (at full requested size) leaves almost
    no horizontal clearance beside it — nowhere for the shadow image to
-   actually show. Shift the photo (and its glow) right instead of shrinking
-   it, opening up real room on the left for the shadow. */
+   actually show. Shift the photo (and its glow) left instead of shrinking
+   it, opening up real room on the right for the shadow (matches the
+   artist's own poster, where the blur streak sits to his right). Shift
+   amount is tuned per tier -- the shadow is large enough now that a
+   fixed shift doesn't leave enough of it on-screen at every width. */
 @media (max-width: 767px) {
   .hero-photo--glow,
   .hero-photo-wrap {
-    left: 62%;
+    left: 32%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1099px) {
+  .hero-photo--glow,
+  .hero-photo-wrap {
+    left: 42%;
   }
 }
 
@@ -481,33 +485,41 @@ summary:focus-visible {
 
 /* User-provided blurred silhouette placed beside the sharp photo — an
    ambient echo/shadow, distinct from the centered glow duplicate above.
-   Cropped tight to its own content (no dead transparent margin) so the
-   sizing below maps directly to visible pixels. Anchored from the top so
-   its lighter (face/neck) end lines up with the artist's head instead of
-   sinking into the already-dark area near the bottom of Hero, where its
-   own dark half would disappear against the background. */
+   Matches the artist's own poster: a large blur streak to his right, at
+   roughly head height. Cropped tight to its own content (no dead
+   transparent margin) so the sizing below maps directly to visible
+   pixels. Anchored from the top so its lighter (face/neck) end lines up
+   with the artist's head instead of sinking into the already-dark area
+   near the bottom of Hero, where its own dark half would disappear
+   against the background. */
 .hero-photo-shadow {
   position: absolute;
-  top: 30%;
-  /* Positioned relative to the photo's own edge (not a fixed left%), so it
-     stays close to him at any viewport width instead of drifting into a
-     wide, disconnected gap on wider screens. The photo's left edge sits at
-     (100% - center%) from the right, plus its own half-width in vh (it's
-     sized off hero height) -- this mirrors that math with a small gap. */
-  right: calc(38% + 22vh);
-  width: 18vh;
-  max-width: 190px;
+  top: 22%;
+  /* Left offset is tuned per tier to keep a large chunk of it on-screen
+     next to the (also shifted) photo -- at this size a single formula
+     across all widths left too little of it visible on narrower screens. */
+  left: calc(32% + 8vh);
+  width: 26vh;
+  max-width: 260px;
   height: auto;
   z-index: 0;
-  opacity: 0.85;
+  opacity: 0.9;
   pointer-events: none;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1099px) {
   .hero-photo-shadow {
-    right: calc(50% + 24vh);
-    width: 20vh;
-    max-width: 210px;
+    left: calc(42% + 14vh);
+    width: 30vh;
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .hero-photo-shadow {
+    left: calc(50% + 26vh);
+    width: 34vh;
+    max-width: 360px;
   }
 }
 
@@ -617,8 +629,6 @@ summary:focus-visible {
 
 .tour-marquee {
   overflow: hidden;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
   padding: 14px 0;
   margin-bottom: 56px;
   user-select: none;
@@ -689,7 +699,6 @@ summary:focus-visible {
 /* ===== Countdown ===== */
 
 .countdown-bar {
-  border-bottom: 1px solid var(--border);
   margin-bottom: 56px;
 }
 
@@ -744,7 +753,6 @@ summary:focus-visible {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--border);
 }
 
 .tour-item {
