@@ -62,6 +62,11 @@
 </head>
 <body>
 
+<noscript><style>.splash { display: none; }</style></noscript>
+<div class="splash" id="splash" aria-hidden="true">
+  <img src="assets/img/hero-title.webp" alt="" class="splash-title-img" width="628" height="258">
+</div>
+
 <!-- ============ HEADER ============ -->
 <header class="site-header" id="site-header">
   <div class="container header-inner">
@@ -127,12 +132,28 @@
 
   <!-- ============ TOUR DATES ============ -->
   <section class="section tour" id="tour">
-    <div class="container">
-      <h2 class="section-title fade-in">График тура</h2>
-      <p class="section-subtitle fade-in">Выбирайте город и успейте на концерт</p>
+    <h2 class="sr-only">Тур 2026</h2>
 
+    <div class="tour-marquee" aria-hidden="true">
+      <div class="tour-marquee-track">
+        <div class="tour-marquee-group">
+          <span>ТУР 2026</span><span>→</span>
+          <span>ТУР 2026</span><span>→</span>
+          <span>ТУР 2026</span><span>→</span>
+          <span>ТУР 2026</span><span>→</span>
+        </div>
+        <div class="tour-marquee-group">
+          <span>ТУР 2026</span><span>→</span>
+          <span>ТУР 2026</span><span>→</span>
+          <span>ТУР 2026</span><span>→</span>
+          <span>ТУР 2026</span><span>→</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
       <div class="countdown fade-in" id="countdown">
-        <p class="countdown-label">До ближайшего концерта</p>
+        <p class="countdown-label">До начала тура</p>
         <div class="countdown-timer">
           <div class="countdown-unit">
             <span class="countdown-value" id="cd-days">00</span>
