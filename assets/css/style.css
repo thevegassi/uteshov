@@ -432,27 +432,6 @@ summary:focus-visible {
   z-index: 1;
 }
 
-/* Below this, the sharp photo alone (at full requested size) leaves almost
-   no horizontal clearance beside it — nowhere for the shadow image to
-   actually show. Shift the photo (and its glow) left instead of shrinking
-   it, opening up real room on the right for the shadow (matches the
-   artist's own poster, where the blur streak sits to his right). Shift
-   amount is tuned per tier -- the shadow is large enough now that a
-   fixed shift doesn't leave enough of it on-screen at every width. */
-@media (max-width: 767px) {
-  .hero-photo--glow,
-  .hero-photo-wrap {
-    left: 32%;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1099px) {
-  .hero-photo--glow,
-  .hero-photo-wrap {
-    left: 42%;
-  }
-}
-
 @media (min-width: 768px) {
   .hero-photo--glow,
   .hero-photo-wrap {
@@ -483,44 +462,22 @@ summary:focus-visible {
   mask-repeat: no-repeat;
 }
 
-/* User-provided blurred silhouette placed beside the sharp photo — an
-   ambient echo/shadow, distinct from the centered glow duplicate above.
-   Matches the artist's own poster: a large blur streak to his right, at
-   roughly head height. Cropped tight to its own content (no dead
-   transparent margin) so the sizing below maps directly to visible
-   pixels. Anchored from the top so its lighter (face/neck) end lines up
-   with the artist's head instead of sinking into the already-dark area
-   near the bottom of Hero, where its own dark half would disappear
-   against the background. */
+/* User-provided blurred silhouette tucked right behind the artist's right
+   shoulder — mostly hidden behind the sharp photo (z-index below it),
+   only peeking out past his shoulder line. The photo stays centered, so
+   this is positioned off the same 50% center plus a fixed vh offset that
+   lands inside the photo's own footprint; only the part beyond the
+   photo's right edge shows. */
 .hero-photo-shadow {
   position: absolute;
-  top: 22%;
-  /* Left offset is tuned per tier to keep a large chunk of it on-screen
-     next to the (also shifted) photo -- at this size a single formula
-     across all widths left too little of it visible on narrower screens. */
-  left: calc(32% + 8vh);
-  width: 26vh;
-  max-width: 260px;
+  top: 34%;
+  left: calc(50% + 6vh);
+  width: 24vh;
+  max-width: 240px;
   height: auto;
   z-index: 0;
   opacity: 0.9;
   pointer-events: none;
-}
-
-@media (min-width: 768px) and (max-width: 1099px) {
-  .hero-photo-shadow {
-    left: calc(42% + 14vh);
-    width: 30vh;
-    max-width: 320px;
-  }
-}
-
-@media (min-width: 1100px) {
-  .hero-photo-shadow {
-    left: calc(50% + 26vh);
-    width: 34vh;
-    max-width: 360px;
-  }
 }
 
 .hero-overlay {
