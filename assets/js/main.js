@@ -25,6 +25,57 @@
     });
   });
 
+  // ---- Countdown to the nearest upcoming show ----
+  (function initCountdown() {
+    const countdownEl = document.getElementById('countdown');
+    if (!countdownEl) return;
+
+    const shows = Array.from(document.querySelectorAll('.tour-item[data-date]'))
+      .map((el) => ({ el, date: new Date(el.dataset.date) }))
+      .filter((show) => !Number.isNaN(show.date.getTime()));
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const daysEl = document.getElementById('cd-days');
+    const hoursEl = document.getElementById('cd-hours');
+    const minsEl = document.getElementById('cd-mins');
+    const secsEl = document.getElementById('cd-secs');
+    const cityEl = document.getElementById('countdown-city');
+
+    let timer = null;
+
+    function tick() {
+      const next = shows
+        .filter((show) => show.date.getTime() > Date.now())
+        .sort((a, b) => a.date - b.date)[0];
+
+      if (!next) {
+        clearInterval(timer);
+        countdownEl.remove();
+        return;
+      }
+
+      const diff = next.date.getTime() - Date.now();
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      const secs = Math.floor((diff % 60000) / 1000);
+
+      daysEl.textContent = pad(days);
+      hoursEl.textContent = pad(hours);
+      minsEl.textContent = pad(mins);
+      secsEl.textContent = pad(secs);
+      cityEl.textContent = next.el.querySelector('.tour-city')?.textContent || '';
+    }
+
+    if (shows.length === 0) {
+      countdownEl.remove();
+      return;
+    }
+
+    tick();
+    timer = setInterval(tick, 1000);
+  })();
+
   // ---- Fade-in on scroll ----
   const fadeEls = document.querySelectorAll('.fade-in');
 
