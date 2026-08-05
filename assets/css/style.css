@@ -735,7 +735,6 @@ summary:focus-visible {
 
 .tour-item:hover {
   background: rgba(255, 255, 255, 0.03);
-  padding-left: 28px;
 }
 
 .tour-item:hover::before {
@@ -859,10 +858,10 @@ summary:focus-visible {
 }
 
 .tour-btn:hover {
-  background: #7a7a7a;
+  background: var(--accent);
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 8px 22px -6px rgba(122, 122, 122, 0.3);
+  box-shadow: 0 8px 22px -6px rgba(184, 141, 217, 0.3);
 }
 
 .tour-item.is-sold-out .tour-city,
