@@ -47,7 +47,8 @@ body {
 }
 
 /* Wraps everything below the fixed header/splash. The gradient background
-   repeats seamlessly to cover the full page height. */
+   repeats seamlessly to cover the full page height. Based on analysis of
+   the original background image's color palette. */
 .page-content {
   position: relative;
   z-index: 0;
@@ -55,18 +56,23 @@ body {
   background: repeating-linear-gradient(
     180deg,
     #2b3047 0%,
+    #3f415c 6%,
     #4b506a 10%,
-    #536674 15%,
-    #4a5a72 22%,
-    #3a3f56 32%,
-    #262835 39%,
-    #2d2e40 44%,
+    #525c76 13%,
+    #586180 16%,
+    #5a6787 20%,
+    #586789 23%,
+    #434d65 30%,
+    #2b2d3d 36%,
+    #262835 40%,
+    #303347 46%,
     #3b3f54 50%,
-    #2d2e40 56%,
-    #262835 61%,
-    #3a3f56 68%,
-    #4a5a72 78%,
-    #536674 85%,
+    #303347 54%,
+    #262835 60%,
+    #2b2d3d 64%,
+    #434d65 70%,
+    #586789 77%,
+    #5a6787 80%,
     #4b506a 90%,
     #2b3047 100%
   );
