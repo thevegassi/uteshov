@@ -208,7 +208,7 @@
 
   if (canMagnetize) {
     document.querySelectorAll('[data-magnetic]').forEach((btn) => {
-      const strength = 0.3;
+      const strength = parseFloat(btn.dataset.magnetic) || 0.3;
       btn.addEventListener('mousemove', (e) => {
         const rect = btn.getBoundingClientRect();
         const x = (e.clientX - rect.left - rect.width / 2) * strength;
@@ -221,6 +221,52 @@
         btn.style.transform = 'translate(0, 0)';
       });
     });
+  }
+
+  // ---- Tilt-on-hover for the booking card (desktop pointer only) ----
+  if (canMagnetize) {
+    document.querySelectorAll('[data-tilt]').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transition = 'transform 0.1s ease-out';
+        card.style.transform = `perspective(800px) rotateX(${py * -6}deg) rotateY(${px * 6}deg) scale(1.015)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+      });
+    });
+  }
+
+  // ---- Ambient cursor glow (desktop pointer only) ----
+  if (canMagnetize) {
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    glow.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(glow);
+
+    let glowRaf = null;
+    let glowX = 0;
+    let glowY = 0;
+
+    window.addEventListener(
+      'mousemove',
+      (e) => {
+        glow.classList.add('is-active');
+        glowX = e.clientX;
+        glowY = e.clientY;
+        if (glowRaf) return;
+        glowRaf = requestAnimationFrame(() => {
+          glow.style.transform = `translate(${glowX}px, ${glowY}px) translate(-50%, -50%)`;
+          glowRaf = null;
+        });
+      },
+      { passive: true }
+    );
+
+    document.addEventListener('mouseleave', () => glow.classList.remove('is-active'));
   }
 
   // ---- Clips player: single large clip, arrows page between videos ----
