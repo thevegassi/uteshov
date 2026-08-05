@@ -473,7 +473,7 @@ summary:focus-visible {
 .hero-photo-frame {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: 52%;
   transform: translateX(-50%);
   height: 56%;
   z-index: 1;
