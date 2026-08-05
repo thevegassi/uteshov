@@ -95,37 +95,6 @@
 
 <div class="page-content">
 
-<!-- Continuous background, rendered as real <img> tiles rather than a CSS
-     repeat-y background-image: at the huge scaled size this needs to span
-     the full page height, Chromium's tiled rasterizer showed a faint but
-     real seam line partway down long pages. Plain <img> elements don't hit
-     that path. Each tile is pre-built as [image + its own vertical flip],
-     so repeating the same tile is seamless at every boundary. The source
-     photo is 16:9 (short relative to its width), so on narrow/tall
-     viewports each tile only contributes ~1.1x its width in height --
-     20 repeats keeps real margin over the tallest page (mobile, ~6400px). -->
-<div class="bg-tiles" aria-hidden="true">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-  <img src="assets/img/bg-mirror-tile.webp" alt="" width="2000" height="2250">
-</div>
 
 <main id="top">
 

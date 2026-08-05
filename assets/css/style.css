@@ -46,25 +46,35 @@ body {
   background-color: var(--bg);
 }
 
-/* Wraps everything below the fixed header/splash so .bg-tiles (see below)
-   can be clipped to real content height without an overflow:hidden on
-   body itself -- browsers propagate a root/body overflow to the whole
-   viewport (a CSS spec quirk), which silently disables page scrolling
-   entirely rather than just clipping. A nested wrapper doesn't have that
-   problem. */
+/* Wraps everything below the fixed header/splash. The gradient background
+   repeats seamlessly to cover the full page height. */
 .page-content {
   position: relative;
   z-index: 0;
   overflow: hidden;
+  background: repeating-linear-gradient(
+    180deg,
+    #2b3047 0%,
+    #4b506a 10%,
+    #536674 15%,
+    #4a5a72 22%,
+    #3a3f56 32%,
+    #262835 39%,
+    #2d2e40 44%,
+    #3b3f54 50%,
+    #2d2e40 56%,
+    #262835 61%,
+    #3a3f56 68%,
+    #4a5a72 78%,
+    #536674 85%,
+    #4b506a 90%,
+    #2b3047 100%
+  );
+  background-attachment: fixed;
 }
 
-/* Continuous background for the entire page, not just Hero: real <img>
-   tiles (see .bg-tiles below) instead of a CSS repeat-y background-image
-   -- at the size this needs to span the full page height, the CSS
-   version showed a faint but real seam line partway down the page from
-   Chromium's tiled rasterizer. A flat dark scrim on top of the tiles
-   reads as atmosphere behind every section rather than a busy photo,
-   while never flattening out to solid black anywhere on the page. */
+/* Dark scrim overlay that reads as atmosphere, preventing the gradient
+   from being too busy while keeping color variation visible across sections. */
 body::before {
   content: '';
   position: fixed;
@@ -72,22 +82,6 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background: rgba(8, 10, 18, 0.6);
-}
-
-.bg-tiles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: -2;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.bg-tiles img {
-  display: block;
-  width: 100%;
-  height: auto;
 }
 
 /* Whole-page film grain — ties the Hero photograph and the flat UI
