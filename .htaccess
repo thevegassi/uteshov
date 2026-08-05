@@ -1,0 +1,86 @@
+# Apache Configuration for Abzal Uteshov Landing Page
+# Performance Optimization: Cache Headers & Compression
+
+<IfModule mod_deflate.c>
+  # Enable compression
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+
+  # Specify encoding
+  Header append Content-Encoding: gzip
+
+  # Remove conflicting headers
+  Header unset Content-Encoding env=no_pragma
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Default: 30 days
+  ExpiresDefault "access plus 30 days"
+
+  # HTML: No cache (always revalidate)
+  ExpiresByType text/html "now"
+
+  # CSS & JavaScript: 1 year
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+
+  # Fonts: 1 year
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+
+  # Images: 1 year
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+
+  # OG Images: 1 day
+  <FilesMatch "og-cover\.(jpg|jpeg|png)$">
+    ExpiresByType image/jpeg "access plus 1 day"
+    ExpiresByType image/png "access plus 1 day"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Enable ETag
+  Header unset ETag
+  FileETag MTime Size
+
+  # Security headers
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Cache headers for static assets
+  <FilesMatch "\.(css|js|woff|woff2|ttf|otf|eot|svg|webp|jpg|jpeg|png|gif|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # HTML: No cache
+  <FilesMatch "\.html?$">
+    Header set Cache-Control "no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>
+
+# Redirect HTTP to HTTPS
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# Add MIME type for WebP (if not recognized by server)
+AddType image/webp .webp
