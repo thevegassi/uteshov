@@ -414,125 +414,24 @@ summary:focus-visible {
   z-index: 0;
 }
 
-.hero-media-glow {
-  position: absolute;
-  inset: -10px;
-  background: #20253b url('../img/hero-bg.webp') center / cover no-repeat;
-  animation: hero-breathe 12s ease-in-out infinite;
-}
-
-@keyframes hero-breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.035); }
-}
-
+/* Artist photo already includes his shadow, baked in by the source image —
+   just placed and sized, no extra glow duplicate, tint or shadow layer. */
 .hero-photo {
-  display: block;
-  width: auto;
-  max-width: none;
-  height: 100%;
-  object-fit: contain;
-  object-position: bottom;
-  /* Slight desaturation/contrast so the crisp cutout reads as part of the
-     scene rather than a flat sticker pasted over the background. */
-  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.55)) saturate(0.92) contrast(1.04);
-}
-
-/* Blurred, scaled-up duplicate sitting behind the sharp photo — an ambient
-   glow that helps the subject blend into the background instead of
-   standing out as a sharp cutout. Same source image, no extra asset. */
-.hero-photo--glow {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  height: 64%;
-  transform: translateX(-50%) scale(1.18);
-  z-index: 0;
-  filter: blur(50px) saturate(1.5) brightness(1.15);
-  opacity: 0.55;
-  mix-blend-mode: screen;
-}
-
-/* Wraps the sharp photo so .hero-photo-shade can tint it with a gradient
-   without affecting the blurred glow duplicate or the shadow image. */
-.hero-photo-wrap {
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 64%;
+  height: 56%;
+  width: auto;
+  max-width: none;
   z-index: 1;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
 }
 
 @media (min-width: 768px) {
-  .hero-photo--glow,
-  .hero-photo-wrap {
-    height: 68%;
+  .hero-photo {
+    height: 62%;
   }
-}
-
-/* Gradient fill over the sharp photo so it reads as toned into the scene
-   rather than an overly bright/vivid cutout. Masked to the same cutout's
-   alpha channel — without this it paints as a plain rectangle and shows
-   up as a visible dark box around the transparent padding of the photo. */
-.hero-photo-shade {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  background-image: linear-gradient(
-    180deg,
-    rgba(37, 42, 67, 0) 0%,
-    rgba(30, 34, 54, 0.28) 55%,
-    rgba(10, 10, 10, 0.6) 100%
-  );
-  -webkit-mask-image: url('../img/hero-artist.webp');
-  -webkit-mask-size: 100% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-image: url('../img/hero-artist.webp');
-  mask-size: 100% 100%;
-  mask-repeat: no-repeat;
-}
-
-/* User-provided blurred silhouette tucked right behind the artist's right
-   shoulder — mostly hidden behind the sharp photo (z-index below it),
-   only peeking out past his shoulder line. The photo stays centered, so
-   this is positioned off the same 50% center plus a fixed vh offset that
-   lands inside the photo's own footprint; only the part beyond the
-   photo's right edge shows. */
-.hero-photo-shadow {
-  position: absolute;
-  top: 31%;
-  /* The mask below fades in from this box's edges, with its opaque core
-     around 40% of the box's own width -- if the box only just clears the
-     photo, that core sits behind the photo and only the mask's faint
-     trailing edge is actually visible, reading as "far away and weak"
-     even though the box itself is close. Shifted right so the core
-     itself clears the photo's edge. */
-  left: calc(50% + 11vh);
-  width: 24vh;
-  max-width: 240px;
-  height: auto;
-  z-index: 0;
-  opacity: 0.9;
-  pointer-events: none;
-  -webkit-mask-image: radial-gradient(ellipse 65% 60% at 40% 45%, #000 45%, transparent 82%);
-  mask-image: radial-gradient(ellipse 65% 60% at 40% 45%, #000 45%, transparent 82%);
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.65) 0%,
-    rgba(0, 0, 0, 0.3) 20%,
-    rgba(0, 0, 0, 0) 38%,
-    rgba(0, 0, 0, 0) 66%,
-    var(--bg) 100%
-  );
 }
 
 .hero-content {
@@ -596,30 +495,6 @@ summary:focus-visible {
 
 .info {
   padding-bottom: 104px;
-}
-
-/* Hero renders its own hero-bg.webp independently (sized to fill its own
-   box via "cover"), so it can't line up pixel-for-pixel with body's
-   continuous tiled background below. Rather than chase an exact match,
-   this hides the handoff: opaque at var(--bg) right where Hero's own fade
-   ends, dissolving to fully transparent so body's tiled background (which
-   is already there underneath) takes over smoothly. Everything past this
-   short zone is body's background alone — no further per-section masking
-   needed, since the tile already runs the full height of the document. */
-.tour {
-  z-index: 0;
-}
-
-.tour::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 8vh;
-  z-index: -1;
-  pointer-events: none;
-  background-image: linear-gradient(180deg, var(--bg) 0%, transparent 100%);
 }
 
 /* ===== Tour marquee ===== */
@@ -1309,9 +1184,6 @@ summary:focus-visible {
     scroll-behavior: auto;
   }
   body::after {
-    animation: none;
-  }
-  .hero-media-glow {
     animation: none;
   }
   .tour-marquee-track {
