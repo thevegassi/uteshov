@@ -10,11 +10,12 @@
   --text: #f5f5f2;
   --text-muted: #9a9a95;
   --border: rgba(255, 255, 255, 0.1);
-  /* #e3202e passes WCAG AA (4.65:1) for white button text; #e63946 alone was 4.17:1 */
-  --accent: #e3202e;
-  --accent-hover: #ff4d5a;
-  --gis-green: #2ecc71;
-  --gis-green-hover: #4cde85;
+  /* Soft muted purple/rose that harmonizes with the blue gradient background */
+  --accent: #b88dd9;
+  --accent-hover: #d4b5e8;
+  /* Soft cool silver-blue for links, replaces jarring green */
+  --gis-green: #7eb3d4;
+  --gis-green-hover: #9ec8e0;
 
   /* Bebas Neue has no Cyrillic glyphs (Latin/Latin-ext only) — it's used
      only for pure-numeral display (day-of-month, countdown digits), never
@@ -228,7 +229,7 @@ summary:focus-visible {
   border: 1px solid transparent;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn:active {
@@ -268,12 +269,12 @@ summary:focus-visible {
   background: var(--accent);
   color: #fff;
   box-shadow: 0 0 0 0 rgba(227, 32, 46, 0);
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.35s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-accent:hover {
   background: var(--accent-hover);
-  box-shadow: 0 10px 30px -6px rgba(255, 77, 90, 0.5);
+  box-shadow: 0 10px 30px -6px rgba(184, 141, 217, 0.3);
 }
 
 .btn-outline {
@@ -589,7 +590,7 @@ summary:focus-visible {
 .tour-marquee-track {
   display: flex;
   width: max-content;
-  animation: tour-marquee-scroll 24s linear infinite;
+  animation: tour-marquee-scroll 30s linear infinite;
 }
 
 .tour-marquee-group {
@@ -712,7 +713,7 @@ summary:focus-visible {
   margin-left: -20px;
   border-bottom: 1px solid var(--border);
   border-radius: 12px;
-  transition: background-color 0.25s ease, padding-left 0.25s ease, margin-left 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tour-item::before {
@@ -853,7 +854,7 @@ summary:focus-visible {
   text-align: center;
   color: var(--accent-hover);
   border-color: rgba(227, 32, 46, 0.4);
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tour-btn:hover {
@@ -1277,9 +1278,9 @@ summary:focus-visible {
 .fade-in {
   --reveal-i: 0;
   opacity: 0;
-  transform: translateY(28px) scale(0.97);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: calc(var(--reveal-i) * 70ms);
+  transform: translateY(20px) scale(0.98);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: calc(var(--reveal-i) * 60ms);
 }
 
 .fade-in.is-visible {
