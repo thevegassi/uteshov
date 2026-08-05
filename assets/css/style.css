@@ -46,35 +46,19 @@ body {
   background-color: var(--bg);
 }
 
-/* Wraps everything below the fixed header/splash. The gradient background
-   repeats seamlessly to cover the full page height. Based on analysis of
-   the original background image's color palette. */
+/* Wraps everything below the fixed header/splash. Gradient based on
+   the exact colors extracted from the original background. */
 .page-content {
   position: relative;
   z-index: 0;
   overflow: hidden;
-  background: repeating-linear-gradient(
+  background: linear-gradient(
     180deg,
-    #2b3047 0%,
-    #3f415c 6%,
-    #4b506a 10%,
-    #525c76 13%,
-    #586180 16%,
-    #5a6787 20%,
-    #586789 23%,
-    #434d65 30%,
-    #2b2d3d 36%,
-    #262835 40%,
-    #303347 46%,
-    #3b3f54 50%,
-    #303347 54%,
-    #262835 60%,
-    #2b2d3d 64%,
-    #434d65 70%,
-    #586789 77%,
-    #5a6787 80%,
-    #4b506a 90%,
-    #2b3047 100%
+    #3B3F59 0%,
+    #5D718C 25%,
+    #535B73 50%,
+    #2E3140 75%,
+    #1C1D26 100%
   );
   background-attachment: fixed;
 }
