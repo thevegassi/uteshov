@@ -151,10 +151,18 @@
     setInterval(update, 60000);
   })();
 
-  // ---- Subtle parallax drift on the background tiles ----
+  // ---- Subtle parallax drift on the background tiles (desktop pointer
+  // only -- mobile browsers' rubber-band overscroll and dynamic address
+  // bar make a scrollY-driven transform jump around unpredictably there). ----
   (function initParallax() {
     const bgTiles = document.querySelector('.bg-tiles');
-    if (!bgTiles || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (
+      !bgTiles ||
+      !window.matchMedia('(pointer: fine)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
 
     let ticking = false;
     function update() {
