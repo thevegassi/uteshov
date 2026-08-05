@@ -17,12 +17,7 @@
   --gis-green: #7eb3d4;
   --gis-green-hover: #9ec8e0;
 
-  /* Bebas Neue has no Cyrillic glyphs (Latin/Latin-ext only) — it's used
-     only for pure-numeral display (day-of-month, countdown digits), never
-     for Cyrillic headings/labels, where it would silently fall back and
-     mismatch mid-word. Montserrat covers Cyrillic fully and carries the
-     rest of the display/heading role. */
-  --font-display: 'Bebas Neue', sans-serif;
+  --font-display: 'Montserrat', sans-serif;
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Montserrat', sans-serif;
 
