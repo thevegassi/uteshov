@@ -407,19 +407,27 @@ summary:focus-visible {
   z-index: 0;
 }
 
-/* Broad, soft accent wash behind the title -- spans a wide swath of the
-   Hero rather than tracing a specific shape. */
-.hero-media::before {
+/* Dark fade across the bottom of Hero: hides the artist photo's hard,
+   un-faded bottom edge and carries the section down into var(--bg), the
+   same tone Tour's own top fade starts from -- together they read as one
+   deliberate dark bridge between the two sections instead of a seam. */
+.hero::after {
   content: '';
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  z-index: 2;
   pointer-events: none;
-  background: radial-gradient(60% 55% at 50% 28%, rgba(227, 32, 46, 0.18), transparent 72%);
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.85) 70%, var(--bg) 100%);
 }
 
 /* Artist photo already includes his shadow, baked in by the source image —
-   just placed and sized, no extra glow duplicate, tint or shadow layer. */
+   just placed and sized, no extra glow duplicate, tint or shadow layer.
+   The source asset itself has a hard, un-feathered vertical cutoff partway
+   through the shadow's right edge (not something introduced by cropping
+   here) -- masked off so it fades out instead of ending in a visible line. */
 .hero-photo {
   position: absolute;
   bottom: 0;
@@ -429,6 +437,8 @@ summary:focus-visible {
   width: auto;
   max-width: none;
   z-index: 1;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
   filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
 }
 
@@ -501,8 +511,8 @@ summary:focus-visible {
   padding-bottom: 104px;
 }
 
-/* Broad, soft wash across the top third of the section instead of a thin
-   seam strip -- covers a real area of the page, not a pinpoint effect. */
+/* Continues the dark bridge Hero's own bottom fade ends on (both meet at
+   var(--bg)), then releases back to the shared tiled background. */
 .tour {
   position: relative;
   z-index: 0;
@@ -514,10 +524,10 @@ summary:focus-visible {
   top: 0;
   left: 0;
   right: 0;
-  height: 45vh;
+  height: 14vh;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(70% 60% at 50% 0%, rgba(46, 82, 227, 0.14), transparent 78%);
+  background: linear-gradient(180deg, var(--bg) 0%, transparent 100%);
 }
 
 /* ===== Tour marquee ===== */
@@ -983,19 +993,6 @@ summary:focus-visible {
 .platform-link svg {
   width: 28px;
   height: 28px;
-}
-
-/* Brand icons carry their own fixed colors, so only the hover lift applies.
-   The Apple Music mark is a single flat path where the note glyphs are cut
-   out as negative space (transparent holes) rather than drawn in a second
-   color -- without a light backing behind it those holes show the page's
-   dark background through them and the notes disappear. A white backing
-   box reproduces the familiar "white notes on the red tile" look. */
-.platform-link--brand svg {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: #fff;
 }
 
 /* ===== FAQ + Booking ===== */
