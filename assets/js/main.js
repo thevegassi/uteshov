@@ -151,6 +151,28 @@
     setInterval(update, 60000);
   })();
 
+  // ---- Subtle parallax drift on the background tiles ----
+  (function initParallax() {
+    const bgTiles = document.querySelector('.bg-tiles');
+    if (!bgTiles || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let ticking = false;
+    function update() {
+      bgTiles.style.transform = `translateY(${window.scrollY * -0.12}px)`;
+      ticking = false;
+    }
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  })();
+
   // ---- Fade-in on scroll ----
   const fadeEls = document.querySelectorAll('.fade-in');
 
