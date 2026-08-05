@@ -17,7 +17,12 @@
   --gis-green: #7eb3d4;
   --gis-green-hover: #9ec8e0;
 
-  --font-display: 'Montserrat', sans-serif;
+  /* Bebas Neue has no Cyrillic glyphs (Latin/Latin-ext only) — it's used
+     only for pure-numeral display (day-of-month, countdown digits), never
+     for Cyrillic headings/labels, where it would silently fall back and
+     mismatch mid-word. Montserrat covers Cyrillic fully and carries the
+     rest of the display/heading role. */
+  --font-display: 'Bebas Neue', sans-serif;
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Montserrat', sans-serif;
 
@@ -847,13 +852,13 @@ summary:focus-visible {
   font-size: 12px;
   text-align: center;
   color: #fff;
-  background: #6a6a6a;
+  background: var(--accent);
   border-color: transparent;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tour-btn:hover {
-  background: var(--accent);
+  background: var(--accent-hover);
   color: #fff;
   border-color: transparent;
   box-shadow: 0 8px 22px -6px rgba(184, 141, 217, 0.3);
