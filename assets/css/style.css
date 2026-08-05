@@ -478,27 +478,37 @@ summary:focus-visible {
 
 /* Artist photo already includes his shadow, baked in by the source image —
    just placed and sized, no extra glow duplicate, tint or shadow layer.
-   The source asset itself has a hard, un-feathered vertical cutoff partway
-   through the shadow's right edge (not something introduced by cropping
-   here) -- masked off so it fades out instead of ending in a visible line. */
-.hero-photo {
+   The mask (feathering the source's hard right-edge cutoff, see below) and
+   the drop-shadow filter are split across two elements on purpose: filters
+   render before masking, so a filter and a mask on the very same element
+   makes the browser compute the drop-shadow from the photo's *unmasked*
+   shape -- which, being a tight crop, touches non-zero alpha right at
+   every edge -- and blur that into a faint rectangular halo tracing the
+   crop's bounding box. Masking the inner img and filtering the outer
+   wrapper makes the shadow follow the already-masked (feathered) shape. */
+.hero-photo-frame {
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   height: 56%;
-  width: auto;
-  max-width: none;
   z-index: 1;
-  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
-  mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
   filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
 }
 
 @media (min-width: 768px) {
-  .hero-photo {
+  .hero-photo-frame {
     height: 62%;
   }
+}
+
+.hero-photo {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
 }
 
 .hero-content {
