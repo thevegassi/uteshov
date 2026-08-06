@@ -475,16 +475,16 @@ summary:focus-visible {
 .hero-photo-frame {
   position: absolute;
   bottom: 0;
-  left: 58%;
+  left: 56%;
   transform: translateX(-50%);
-  height: 65%;
+  height: 60%;
   z-index: 1;
   filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
 }
 
 @media (min-width: 768px) {
   .hero-photo-frame {
-    height: 72%;
+    height: 68%;
   }
 }
 
