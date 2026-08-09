@@ -484,7 +484,7 @@ summary:focus-visible {
 .hero-photo-frame {
   position: absolute;
   bottom: 0;
-  left: 63%;
+  left: 58%;
   transform: translateX(-50%);
   /* Capped in vh as well as %: on short viewports (13" laptops at
      1280x800/1440x900 windowed, not full-height retina) a pure percentage
