@@ -479,7 +479,10 @@ summary:focus-visible {
   transform: translateX(-50%);
   height: 60%;
   z-index: 1;
-  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
+  /* Tight blur radius on purpose: the subject fills most of the frame, so a
+     wide blur (previously 50px) reads as a soft rectangle tracing the whole
+     photo instead of a shadow hugging his actual silhouette. */
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.4));
   /* Curtain-up reveal: fully clipped from the top until JS flips
      body.hero-revealed once the splash screen starts hiding. */
   clip-path: inset(100% 0 0 0);
