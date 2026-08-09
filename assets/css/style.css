@@ -536,7 +536,7 @@ body.hero-revealed .hero-photo-frame {
   /* Hard-light punches up contrast against the now-lighter background,
      which was crushing him into a near-silhouette -- lifted brightness
      compensates so his face and jacket read instead of going flat black. */
-  filter: brightness(1.35) contrast(0.95);
+  filter: brightness(1.12) contrast(1);
   -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
   mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
   transform: scale(1.08);
