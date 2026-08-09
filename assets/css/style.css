@@ -68,14 +68,14 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(rgba(8, 10, 18, 0.6), rgba(8, 10, 18, 0.6)),
+    linear-gradient(rgba(8, 10, 18, 0.32), rgba(8, 10, 18, 0.32)),
     linear-gradient(
       180deg,
-      #3B3F59 0%,
-      #5D718C 25%,
-      #535B73 50%,
-      #2E3140 75%,
-      #1C1D26 100%
+      #5C6488 0%,
+      #869BC4 25%,
+      #7A88A8 50%,
+      #454A68 75%,
+      #2A2C3C 100%
     );
 }
 
@@ -468,7 +468,7 @@ summary:focus-visible {
   height: 42%;
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.85) 70%, var(--bg) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.55) 70%, var(--bg) 100%);
 }
 
 /* Artist photo already includes his shadow, baked in by the source image —
@@ -533,6 +533,10 @@ body.hero-revealed .hero-photo-frame {
   max-width: none;
   pointer-events: none;
   mix-blend-mode: hard-light;
+  /* Hard-light punches up contrast against the now-lighter background,
+     which was crushing him into a near-silhouette -- lifted brightness
+     compensates so his face and jacket read instead of going flat black. */
+  filter: brightness(1.35) contrast(0.95);
   -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
   mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
   transform: scale(1.08);
