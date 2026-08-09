@@ -484,9 +484,9 @@ summary:focus-visible {
 .hero-photo-frame {
   position: absolute;
   bottom: 0;
-  left: 60%;
+  left: 63%;
   transform: translateX(-50%);
-  height: 60%;
+  height: 67%;
   z-index: 1;
   /* Tight blur radius on purpose: the subject fills most of the frame, so a
      wide blur (previously 50px) reads as a soft rectangle tracing the whole
