@@ -47,32 +47,36 @@ body {
   background-color: var(--bg);
 }
 
-/* Wraps everything below the fixed header/splash. Gradient based on
-   the exact colors extracted from the original background. */
+/* Wraps everything below the fixed header/splash. The "stays put while
+   sections scroll over it" gradient lives on body::before instead (see
+   below) -- background-attachment: fixed is a well-known scroll-jank
+   source (many mobile browsers repaint it on every scroll frame instead
+   of compositing it), so this element stays a plain scrolling box. */
 .page-content {
   position: relative;
   z-index: 0;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    #3B3F59 0%,
-    #5D718C 25%,
-    #535B73 50%,
-    #2E3140 75%,
-    #1C1D26 100%
-  );
-  background-attachment: fixed;
 }
 
-/* Dark scrim overlay that reads as atmosphere, preventing the gradient
-   from being too busy while keeping color variation visible across sections. */
+/* Atmosphere gradient + dark scrim, combined on one real position:fixed
+   layer (GPU-composited, not repainted on scroll) instead of relying on
+   background-attachment: fixed on the scrolling .page-content above. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: rgba(8, 10, 18, 0.6);
+  background:
+    linear-gradient(rgba(8, 10, 18, 0.6), rgba(8, 10, 18, 0.6)),
+    linear-gradient(
+      180deg,
+      #3B3F59 0%,
+      #5D718C 25%,
+      #535B73 50%,
+      #2E3140 75%,
+      #1C1D26 100%
+    );
 }
 
 /* Whole-page film grain — ties the Hero photograph and the flat UI
@@ -87,7 +91,12 @@ body::after {
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
-  animation: grain-flicker 12s ease-in-out infinite;
+  /* steps() instead of the default continuous easing: this full-viewport,
+     mix-blend-mode layer sits above the entire page and would otherwise
+     need its blend recomposited on every animation frame for as long as
+     the tab is open. Stepping through the same 10 keyframes only forces
+     that recompute 10 times per 12s cycle instead of ~60-120 times/sec. */
+  animation: grain-flicker 12s steps(10) infinite;
   will-change: transform;
 }
 
@@ -475,14 +484,18 @@ summary:focus-visible {
 .hero-photo-frame {
   position: absolute;
   bottom: 0;
-  left: 56%;
+  left: 63%;
   transform: translateX(-50%);
-  height: 60%;
+  height: 67%;
   z-index: 1;
-  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.45));
-  /* Curtain-up reveal: fully clipped from the top until JS flips
-     body.hero-revealed once the splash screen starts hiding. */
-  clip-path: inset(100% 0 0 0);
+  /* Tight blur radius on purpose: the subject fills most of the frame, so a
+     wide blur (previously 50px) reads as a soft rectangle tracing the whole
+     photo instead of a shadow hugging his actual silhouette. */
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.4));
+  /* Top-down reveal: clipped from the bottom (head end stays open) until JS
+     flips body.hero-revealed once the splash screen starts hiding, so his
+     face is visible from the first frame instead of arriving last. */
+  clip-path: inset(0 0 100% 0);
   transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -725,7 +738,7 @@ body.hero-revealed .hero-photo {
 
 .countdown-bar-time {
   display: flex;
-  gap: 28px;
+  gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -733,11 +746,21 @@ body.hero-revealed .hero-photo {
 .countdown-bar-time strong {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 48px;
+  font-size: 34px;
   font-variant-numeric: tabular-nums;
   margin-right: 6px;
   line-height: 1.1;
   letter-spacing: -1px;
+}
+
+@media (min-width: 420px) {
+  .countdown-bar-time {
+    gap: 28px;
+  }
+
+  .countdown-bar-time strong {
+    font-size: 48px;
+  }
 }
 
 .countdown-bar-time small {
@@ -1337,7 +1360,11 @@ body.hero-revealed .hero-photo {
   --reveal-i: 0;
   opacity: 0;
   transform: translateY(20px) scale(0.98);
-  filter: blur(6px);
+  /* Kept light on purpose: several list rows (Tour, FAQ) can enter the
+     viewport within the same ~300ms stagger window, and filter: blur() is
+     one of the more expensive properties to composite -- a heavier radius
+     here reads as stutter on lower-power/mobile GPUs during that burst. */
+  filter: blur(3px);
   transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
     filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: calc(var(--reveal-i) * 60ms);
