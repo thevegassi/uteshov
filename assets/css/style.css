@@ -510,6 +510,7 @@ body.hero-revealed .hero-photo-frame {
 
 @media (min-width: 768px) {
   .hero-photo-frame {
+    left: 54%;
     height: min(68%, 60vh);
   }
 }
