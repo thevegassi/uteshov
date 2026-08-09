@@ -154,36 +154,6 @@
     setInterval(update, 60000);
   })();
 
-  // ---- Subtle parallax drift on the background tiles (desktop pointer
-  // only -- mobile browsers' rubber-band overscroll and dynamic address
-  // bar make a scrollY-driven transform jump around unpredictably there). ----
-  (function initParallax() {
-    const bgTiles = document.querySelector('.bg-tiles');
-    if (
-      !bgTiles ||
-      !window.matchMedia('(pointer: fine)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ) {
-      return;
-    }
-
-    let ticking = false;
-    function update() {
-      bgTiles.style.transform = `translateY(${window.scrollY * -0.12}px)`;
-      ticking = false;
-    }
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (!ticking) {
-          requestAnimationFrame(update);
-          ticking = true;
-        }
-      },
-      { passive: true }
-    );
-  })();
-
   // ---- Fade-in on scroll ----
   const fadeEls = document.querySelectorAll('.fade-in');
 
@@ -217,17 +187,27 @@
     window.matchMedia('(pointer: fine)').matches &&
     !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Both handlers below cache getBoundingClientRect() once per hover (on
+  // mouseenter) instead of on every mousemove -- calling it inside a
+  // mousemove handler forces a synchronous layout read on a hot event that
+  // can fire 100+ times/sec, which is a classic stutter source on the
+  // primary CTA buttons and the booking card people actually hover most.
   if (canMagnetize) {
     document.querySelectorAll('[data-magnetic]').forEach((btn) => {
       const strength = parseFloat(btn.dataset.magnetic) || 0.3;
+      let rect = null;
+      btn.addEventListener('mouseenter', () => {
+        rect = btn.getBoundingClientRect();
+        btn.style.transition = 'transform 0.1s ease-out';
+      });
       btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
+        if (!rect) return;
         const x = (e.clientX - rect.left - rect.width / 2) * strength;
         const y = (e.clientY - rect.top - rect.height / 2) * strength;
-        btn.style.transition = 'transform 0.1s ease-out';
         btn.style.transform = `translate(${x}px, ${y}px)`;
       });
       btn.addEventListener('mouseleave', () => {
+        rect = null;
         btn.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
         btn.style.transform = 'translate(0, 0)';
       });
@@ -237,14 +217,19 @@
   // ---- Tilt-on-hover for the booking card (desktop pointer only) ----
   if (canMagnetize) {
     document.querySelectorAll('[data-tilt]').forEach((card) => {
+      let rect = null;
+      card.addEventListener('mouseenter', () => {
+        rect = card.getBoundingClientRect();
+        card.style.transition = 'transform 0.1s ease-out';
+      });
       card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
+        if (!rect) return;
         const px = (e.clientX - rect.left) / rect.width - 0.5;
         const py = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transition = 'transform 0.1s ease-out';
         card.style.transform = `perspective(800px) rotateX(${py * -6}deg) rotateY(${px * 6}deg) scale(1.015)`;
       });
       card.addEventListener('mouseleave', () => {
+        rect = null;
         card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
         card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
       });
