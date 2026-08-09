@@ -494,6 +494,7 @@ summary:focus-visible {
   width: auto;
   max-width: none;
   pointer-events: none;
+  mix-blend-mode: hard-light;
   -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
   mask-image: linear-gradient(90deg, #000 0%, #000 88%, transparent 99%);
 }
