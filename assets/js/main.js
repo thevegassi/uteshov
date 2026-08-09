@@ -21,6 +21,9 @@
       hidden = true;
       splash.classList.add('is-hidden');
       document.body.classList.remove('is-loading');
+      // Cues the Hero photo wipe-up reveal and title shine sweep so they
+      // land right as the splash clears, instead of popping in unseen behind it.
+      document.body.classList.add('hero-revealed');
       setTimeout(() => splash.remove(), 700);
     }
 

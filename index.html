@@ -190,7 +190,12 @@
 </head>
 <body>
 
-<noscript><style>.splash { display: none; }</style></noscript>
+<noscript><style>
+  .splash { display: none; }
+  .hero-photo-frame { clip-path: none !important; }
+  .hero-photo { transform: none !important; }
+  .hero-title-shine { display: none; }
+</style></noscript>
 <div class="splash" id="splash" aria-hidden="true">
   <img src="assets/img/hero-title.webp" alt="" class="splash-title-img" width="628" height="258">
 </div>
@@ -231,6 +236,7 @@
     <div class="hero-content container">
       <h1 class="hero-title fade-in">
         <img src="assets/img/hero-title.webp" alt="Абзал Утешов" class="hero-title-img" width="628" height="258">
+        <span class="hero-title-shine" aria-hidden="true"></span>
       </h1>
     </div>
 
