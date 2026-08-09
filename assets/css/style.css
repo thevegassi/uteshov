@@ -486,7 +486,12 @@ summary:focus-visible {
   bottom: 0;
   left: 63%;
   transform: translateX(-50%);
-  height: 67%;
+  /* Capped in vh as well as %: on short viewports (13" laptops at
+     1280x800/1440x900 windowed, not full-height retina) a pure percentage
+     of .hero's own box keeps the photo tall enough to climb into the
+     title text -- the title's font-size doesn't shrink with viewport
+     height, so the gap between them was viewport-height-dependent. */
+  height: min(67%, 58vh);
   z-index: 1;
   /* Tight blur radius on purpose: the subject fills most of the frame, so a
      wide blur (previously 50px) reads as a soft rectangle tracing the whole
@@ -505,7 +510,7 @@ body.hero-revealed .hero-photo-frame {
 
 @media (min-width: 768px) {
   .hero-photo-frame {
-    height: 68%;
+    height: min(68%, 60vh);
   }
 }
 
