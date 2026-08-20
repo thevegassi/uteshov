@@ -538,10 +538,10 @@ summary:focus-visible {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 70%;
+  height: 40%;
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient(180deg, transparent 0%, rgba(15, 3, 4, 0.15) 40%, rgba(15, 3, 4, 0.5) 70%, rgba(15, 3, 4, 0.95) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(15, 3, 4, 0.55) 70%, var(--bg) 100%);
 }
 
 /* Full-bleed portrait: unlike the earlier cutout-over-gradient Hero, this
@@ -558,16 +558,17 @@ summary:focus-visible {
   top: 13%;
   left: 0;
   right: 0;
-  bottom: 0;
   width: 100%;
-  height: 87%;
+  height: 94%;
   object-fit: cover;
   object-position: 50% top;
   z-index: 0;
-  /* Feathers the photo's own top edge into transparency so it dissolves
-     into body::before's matching gradient instead of a hard seam line. */
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 70%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 70%, transparent 100%);
+  /* Feathers only the photo's own top edge into transparency so it
+     dissolves into body::before's matching gradient instead of a hard
+     seam line -- stays fully opaque the rest of the way down so he
+     doesn't wash out into the section before .hero::after even starts. */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 18%);
   /* Settles in on load instead of popping in fully-scaled the instant the
      splash clears. */
   transform: scale(1.08) translateY(18px);
