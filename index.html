@@ -568,7 +568,7 @@ summary:focus-visible {
   width: 100%;
   height: 94%;
   object-fit: cover;
-  object-position: 50% top;
+  object-position: 42% top;
   z-index: 0;
   /* Feathers only the photo's own top edge into transparency so it
      dissolves into body::before's matching gradient instead of a hard
@@ -589,14 +589,14 @@ body.hero-revealed .hero-media::before {
 }
 
 body.hero-revealed .hero-bg-photo {
-  transform: scale(1.05) translateY(0);
+  transform: scale(1.12) translateY(0);
   opacity: 1;
   filter: brightness(1) saturate(1.08) contrast(1.02);
 }
 
 @media (min-width: 900px) {
   .hero-bg-photo {
-    object-position: 50% top;
+    object-position: 42% top;
   }
 }
 
@@ -1452,7 +1452,7 @@ body.hero-revealed .hero-bg-photo {
 
 .footer-copy {
   font-size: 12px;
-  color: #5a5a56;
+  color: var(--text-muted);
 }
 
 @media (min-width: 900px) {
@@ -1991,7 +1991,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a href="#top" class="logo">
-      <img src="assets/img/logo.webp" alt="Abzal Uteshov" class="logo-img" width="1065" height="1080">
+      <img src="assets/img/logo.webp" alt="Abzal Uteshov" class="logo-img" width="160" height="162">
     </a>
 
     <nav class="main-nav" id="main-nav">
@@ -2294,6 +2294,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="spotify-player">
             <iframe
               data-testid="embed-iframe"
+              title="Абзал Утешов — Spotify плеер"
               style="border-radius: 12px"
               src="https://open.spotify.com/embed/artist/0Ju7FJOHFT7BKpTVHFt2Dh?utm_source=generator&theme=0"
               width="100%"
