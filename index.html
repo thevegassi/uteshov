@@ -568,7 +568,7 @@ summary:focus-visible {
   width: 100%;
   height: 94%;
   object-fit: cover;
-  object-position: 50% top;
+  object-position: 42% top;
   z-index: 0;
   /* Feathers only the photo's own top edge into transparency so it
      dissolves into body::before's matching gradient instead of a hard
@@ -589,14 +589,14 @@ body.hero-revealed .hero-media::before {
 }
 
 body.hero-revealed .hero-bg-photo {
-  transform: scale(1.05) translateY(0);
+  transform: scale(1.12) translateY(0);
   opacity: 1;
   filter: brightness(1) saturate(1.08) contrast(1.02);
 }
 
 @media (min-width: 900px) {
   .hero-bg-photo {
-    object-position: 50% top;
+    object-position: 42% top;
   }
 }
 
