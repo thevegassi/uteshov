@@ -4,7 +4,7 @@
         xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
   <url>
     <loc>https://uteshov.kz</loc>
-    <lastmod>2026-08-06</lastmod>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -12,8 +12,8 @@
       <image:title>Абзал Утешов</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://uteshov.kz/assets/img/hero-artist.webp</image:loc>
-      <image:title>Абзал Утешов - официальный артист</image:title>
+      <image:loc>https://uteshov.kz/assets/img/uteshov-abzal.webp</image:loc>
+      <image:title>Абзал Утешов</image:title>
     </image:image>
     <mobile:mobile/>
   </url>
