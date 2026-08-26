@@ -791,62 +791,134 @@ body.hero-revealed .hero-bg-photo {
 
 .countdown-bar-inner {
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 10px 32px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  justify-content: center;
+}
+
+.countdown-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 24px 24px;
+  width: 100%;
+  max-width: 560px;
+  background: linear-gradient(180deg, var(--bg-elevated), rgba(28, 14, 13, 0.6));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 20px 48px -20px rgba(0, 0, 0, 0.55);
 }
 
 .countdown-bar-label {
-  flex: 0 0 100%;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   color: var(--accent);
-  margin-bottom: 4px;
+}
+
+.countdown-pulse {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.countdown-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: countdown-pulse-ring 1.8s ease-out infinite;
+}
+
+@keyframes countdown-pulse-ring {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3.2); opacity: 0; }
 }
 
 .countdown-bar-time {
   display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: center;
+  gap: 18px;
+}
+
+.countdown-bar-time span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .countdown-bar-time strong {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 34px;
+  font-size: 40px;
   font-variant-numeric: tabular-nums;
-  margin-right: 6px;
   line-height: 1.1;
   letter-spacing: -1px;
+  background: linear-gradient(180deg, #fff, var(--text-muted));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.countdown-bar-time > span + span {
+  position: relative;
+  margin-left: 18px;
+}
+
+.countdown-bar-time > span + span::before {
+  content: ':';
+  position: absolute;
+  left: -24px;
+  top: 2px;
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1.1;
+  color: var(--gis-green);
+  opacity: 0.7;
 }
 
 @media (min-width: 420px) {
   .countdown-bar-time {
-    gap: 28px;
+    gap: 26px;
   }
 
   .countdown-bar-time strong {
-    font-size: 48px;
+    font-size: 52px;
+  }
+
+  .countdown-bar-time > span + span {
+    margin-left: 26px;
+  }
+
+  .countdown-bar-time > span + span::before {
+    left: -30px;
+    top: 4px;
+    font-size: 44px;
   }
 }
 
 .countdown-bar-time small {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   font-weight: 600;
-  display: block;
-  margin-top: -2px;
+  margin-top: 2px;
 }
 
-.countdown-bar-city {
-  display: none;
+@media (prefers-reduced-motion: reduce) {
+  .countdown-pulse::after {
+    animation: none;
+    opacity: 0.5;
+  }
 }
 
 /* ===== Tour dates ===== */
@@ -2139,14 +2211,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="countdown-bar fade-in" id="countdown">
       <div class="container countdown-bar-inner">
-        <span class="countdown-bar-label">Тур басталуына дейін</span>
-        <div class="countdown-bar-time">
-          <span><strong id="cd-days">00</strong><small>күн</small></span>
-          <span><strong id="cd-hours">00</strong><small>сағат</small></span>
-          <span><strong id="cd-mins">00</strong><small>минут</small></span>
-          <span><strong id="cd-secs">00</strong><small>секунд</small></span>
+        <div class="countdown-card">
+          <span class="countdown-bar-label"><span class="countdown-pulse" aria-hidden="true"></span>Тур басталуына дейін</span>
+          <div class="countdown-bar-time">
+            <span><strong id="cd-days">00</strong><small>күн</small></span>
+            <span><strong id="cd-hours">00</strong><small>сағат</small></span>
+            <span><strong id="cd-mins">00</strong><small>минут</small></span>
+            <span><strong id="cd-secs">00</strong><small>секунд</small></span>
+          </div>
         </div>
-        <span class="countdown-bar-city" id="countdown-city"></span>
       </div>
     </div>
 
@@ -2583,7 +2656,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const hoursEl = document.getElementById('cd-hours');
     const minsEl = document.getElementById('cd-mins');
     const secsEl = document.getElementById('cd-secs');
-    const cityEl = document.getElementById('countdown-city');
 
     let timer = null;
 
@@ -2608,7 +2680,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       hoursEl.textContent = pad(hours);
       minsEl.textContent = pad(mins);
       secsEl.textContent = pad(secs);
-      cityEl.textContent = next.el.querySelector('.tour-city')?.textContent || '';
     }
 
     if (shows.length === 0) {
