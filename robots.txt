@@ -25,4 +25,4 @@ User-agent: SemrushBot
 Disallow: /
 
 # Sitemap location
-Sitemap: https://uteshov.kz/sitemap.xml
+Sitemap: https://uteshov.keyent.kz/sitemap.xml
