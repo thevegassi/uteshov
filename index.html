@@ -697,6 +697,47 @@ body.hero-revealed .hero-bg-photo {
   padding-bottom: 104px;
 }
 
+/* Editorial spine label -- a quiet vertical index running down each
+   section's left edge (desktop only), tying Tour/Music/Booking together
+   as one numbered sequence instead of three unrelated blocks. */
+.section-index {
+  position: absolute;
+  top: 56px;
+  left: 18px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section-index strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  color: var(--gis-green);
+  opacity: 1;
+}
+
+/* Only shown once the viewport has real gutter beyond the 1280px
+   container to sit in -- otherwise it would collide with the container's
+   own left-padded content instead of framing it. */
+@media (max-width: 1439px) {
+  .section-index {
+    display: none;
+  }
+}
+
 /* Continues the dark bridge Hero's own bottom fade ends on (both meet at
    var(--bg)), then releases back to the shared tiled background. */
 .tour {
@@ -739,9 +780,10 @@ body.hero-revealed .hero-bg-photo {
 .tour-scope-num {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(6rem, 18vw, 11rem);
+  font-size: clamp(7rem, 22vw, 15.5rem);
   line-height: 0.78;
   letter-spacing: 0.005em;
+  font-variant-numeric: tabular-nums;
   background: linear-gradient(180deg, #fff, var(--text-muted));
   -webkit-background-clip: text;
   background-clip: text;
@@ -2274,12 +2316,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- ============ TOUR DATES ============ -->
   <section class="section tour" id="tour">
+    <span class="section-index" aria-hidden="true"><strong>01</strong>Тур</span>
     <h2 class="sr-only">Тур 2026</h2>
 
     <div class="container">
       <div class="tour-scope fade-in">
         <div class="tour-scope-figure">
-          <span class="tour-scope-num">15</span>
+          <span class="tour-scope-num" id="tour-scope-num" data-count-to="15">0</span>
           <span class="tour-scope-unit">концерт бір турда</span>
         </div>
         <div class="tour-scope-copy">
@@ -2640,6 +2683,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- ============ MUSIC ============ -->
   <section class="section music" id="music">
+    <span class="section-index" aria-hidden="true"><strong>02</strong>Музыка</span>
     <div class="container">
       <h2 class="section-title fade-in">Музыка және клиптер</h2>
       <p class="section-subtitle fade-in">Жаңа синглы барлық платформаларда</p>
@@ -2695,6 +2739,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- ============ BOOKING/CONTACTS ============ -->
   <section class="section info" id="booking">
+    <span class="section-index" aria-hidden="true"><strong>03</strong>Байланыс</span>
     <div class="container">
       <span class="eyebrow contact-eyebrow fade-in">Байланыс</span>
       <h2 class="section-title section-title-left fade-in">Сұрақтар мен ұсыныстар</h2>
@@ -2920,6 +2965,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     fadeEls.forEach((el) => observer.observe(el));
   } else {
     fadeEls.forEach((el) => el.classList.add('is-visible'));
+  }
+
+  // ---- Tour-scope count-up: animates the "15" from 0 once it scrolls
+  // into view, once only. Reduced-motion / no-IO just shows the final
+  // number straight away. ----
+  const countEl = document.getElementById('tour-scope-num');
+  if (countEl) {
+    const target = parseInt(countEl.dataset.countTo, 10) || 0;
+    const prefersReducedCount = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const runCount = () => {
+      if (prefersReducedCount) {
+        countEl.textContent = target;
+        return;
+      }
+      const duration = 1200;
+      const start = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        countEl.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const countObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              runCount();
+              countObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      countObserver.observe(countEl);
+    } else {
+      countEl.textContent = target;
+    }
   }
 
   // ---- Magnetic CTA buttons (desktop pointer only, respects reduced-motion) ----
