@@ -2156,6 +2156,41 @@ body.hero-revealed .hero-bg-photo {
 }
 </script>
 
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Abzal Uteshov - Біз жолығамыз",
+    "description": "Абзал Утешовтың «Біз жолығамыз» әнінің ресми клипі.",
+    "thumbnailUrl": "https://i.ytimg.com/vi/9jimi5Efc0Y/hqdefault.jpg",
+    "contentUrl": "https://www.youtube.com/watch?v=9jimi5Efc0Y",
+    "embedUrl": "https://www.youtube.com/embed/9jimi5Efc0Y",
+    "publisher": { "@type": "Organization", "name": "Абзал Утешов", "logo": { "@type": "ImageObject", "url": "https://uteshov.keyent.kz/assets/img/logo.webp" } }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Abzal Uteshov - Бір ойлап алам",
+    "description": "Абзал Утешовтың «Бір ойлап алам» әнінің ресми клипі.",
+    "thumbnailUrl": "https://i.ytimg.com/vi/zoIS-RphZyA/hqdefault.jpg",
+    "contentUrl": "https://www.youtube.com/watch?v=zoIS-RphZyA",
+    "embedUrl": "https://www.youtube.com/embed/zoIS-RphZyA",
+    "publisher": { "@type": "Organization", "name": "Абзал Утешов", "logo": { "@type": "ImageObject", "url": "https://uteshov.keyent.kz/assets/img/logo.webp" } }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Abzal Uteshov - Тоқта",
+    "description": "Абзал Утешовтың «Тоқта» әнінің ресми клипі.",
+    "thumbnailUrl": "https://i.ytimg.com/vi/2tUWM5gsl04/hqdefault.jpg",
+    "contentUrl": "https://www.youtube.com/watch?v=2tUWM5gsl04",
+    "embedUrl": "https://www.youtube.com/embed/2tUWM5gsl04",
+    "publisher": { "@type": "Organization", "name": "Абзал Утешов", "logo": { "@type": "ImageObject", "url": "https://uteshov.keyent.kz/assets/img/logo.webp" } }
+  }
+]
+</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLQYK1FYEB"></script>
 <script>
@@ -2996,18 +3031,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ---- Clips player: single large clip, arrows page between videos ----
   const clips = [
-    { id: '9jimi5Efc0Y', label: '1-клип' },
-    { id: 'zoIS-RphZyA', label: '2-клип' },
-    { id: '2tUWM5gsl04', label: '3-клип' },
+    { id: '9jimi5Efc0Y', label: 'Abzal Uteshov - Біз жолығамыз' },
+    { id: 'zoIS-RphZyA', label: 'Abzal Uteshov - Бір ойлап алам' },
+    { id: '2tUWM5gsl04', label: 'Abzal Uteshov - Тоқта' },
   ];
   const clipStage = document.getElementById('clip-stage');
   const clipCounter = document.getElementById('clip-counter');
   let clipIndex = 0;
 
-  function playClip(id) {
+  function playClip(id, label) {
     const iframe = document.createElement('iframe');
     iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
-    iframe.title = 'Абзал Утешовтың клипі';
+    iframe.title = label;
     iframe.loading = 'lazy';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
@@ -3025,7 +3060,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     const img = document.createElement('img');
     img.src = `https://i.ytimg.com/vi/${clip.id}/hqdefault.jpg`;
-    img.alt = '';
+    img.alt = clip.label;
     img.width = 480;
     img.height = 360;
     img.loading = 'lazy';
@@ -3036,7 +3071,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     play.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 
     btn.append(img, play);
-    btn.addEventListener('click', () => playClip(clip.id));
+    btn.addEventListener('click', () => playClip(clip.id, clip.label));
     clipStage.replaceChildren(btn);
 
     if (clipCounter) clipCounter.textContent = `${clipIndex + 1} / ${clips.length}`;
