@@ -852,6 +852,10 @@ body.hero-revealed .hero-bg-photo {
   gap: 18px;
 }
 
+.countdown-bar-time[hidden] {
+  display: none;
+}
+
 .countdown-bar-time span {
   display: flex;
   flex-direction: column;
@@ -922,6 +926,53 @@ body.hero-revealed .hero-bg-photo {
     animation: none;
     opacity: 0.5;
   }
+}
+
+/* Swaps in for .countdown-bar-time once the tour has started -- a "LIVE"
+   mark instead of a countdown to a start date that already passed. */
+.countdown-live {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.countdown-live[hidden] {
+  display: none;
+}
+
+.countdown-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 44px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  background: linear-gradient(180deg, #fff, var(--text-muted));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.countdown-live-tag .countdown-pulse {
+  width: 11px;
+  height: 11px;
+  background: var(--accent);
+}
+
+.countdown-live-next {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  align-self: center;
+}
+
+.countdown-live-next strong {
+  color: var(--gis-green);
+  font-weight: 700;
 }
 
 /* ===== Tour dates ===== */
@@ -2336,11 +2387,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="container countdown-bar-inner">
         <div class="countdown-card">
           <span class="countdown-bar-label"><span class="countdown-pulse" aria-hidden="true"></span><span id="countdown-label-text">Тур басталуына дейін</span></span>
-          <div class="countdown-bar-time">
+          <div class="countdown-bar-time" id="countdown-time">
             <span><strong id="cd-days">00</strong><small>күн</small></span>
             <span><strong id="cd-hours">00</strong><small>сағат</small></span>
             <span><strong id="cd-mins">00</strong><small>минут</small></span>
             <span><strong id="cd-secs">00</strong><small>секунд</small></span>
+          </div>
+          <div class="countdown-live" id="countdown-live" hidden>
+            <span class="countdown-live-tag"><span class="countdown-pulse" aria-hidden="true"></span>LIVE</span>
+            <span class="countdown-live-next" id="countdown-live-next"></span>
           </div>
         </div>
       </div>
@@ -2843,11 +2898,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const minsEl = document.getElementById('cd-mins');
     const secsEl = document.getElementById('cd-secs');
     const labelEl = document.getElementById('countdown-label-text');
+    const timeEl = document.getElementById('countdown-time');
+    const liveEl = document.getElementById('countdown-live');
+    const liveNextEl = document.getElementById('countdown-live-next');
 
     // The very first show on the schedule -- once it's in the past, the
-    // tour itself has started, so the label switches from "until the tour
-    // starts" to "until the next show" instead of staying stuck on a claim
-    // that's no longer true.
+    // tour itself has started. A countdown to a start date that already
+    // happened doesn't make sense, so the card switches from ticking
+    // digits to a pulsing "LIVE" mark plus which city is up next.
     const firstShowDate = Math.min(...shows.map((show) => show.date.getTime()));
     let tourStarted = null;
 
@@ -2865,9 +2923,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       const started = Date.now() >= firstShowDate;
-      if (labelEl && started !== tourStarted) {
+      if (started !== tourStarted) {
         tourStarted = started;
-        labelEl.textContent = started ? 'Келесі концертке дейін' : 'Тур басталуына дейін';
+        if (labelEl) labelEl.textContent = started ? 'Тур жүріп жатыр' : 'Тур басталуына дейін';
+        if (timeEl) timeEl.hidden = started;
+        if (liveEl) liveEl.hidden = !started;
+      }
+
+      if (started) {
+        if (liveNextEl) {
+          const city = next.el.querySelector('.tour-city')?.textContent || '';
+          const day = next.el.querySelector('.tour-day')?.textContent || '';
+          const month = next.el.querySelector('.tour-month')?.textContent || '';
+          liveNextEl.innerHTML = `Келесі: <strong>${city}</strong> — ${day} ${month}`;
+        }
+        return;
       }
 
       const diff = next.date.getTime() - Date.now();
