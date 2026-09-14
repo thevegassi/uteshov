@@ -685,6 +685,80 @@ body.hero-revealed .hero-bg-photo {
   height: 22px;
 }
 
+/* Hero CTA once every show is sold out: a static badge (not a ticket link
+   any more) with a one-time confetti pop timed to the same body.hero-revealed
+   flip that drives the title shine, so it reads as part of the same
+   entrance instead of firing on its own. */
+.hero-soldout {
+  position: relative;
+  display: inline-flex;
+}
+
+.soldout-badge {
+  gap: 10px;
+  cursor: pointer;
+}
+
+.soldout-badge-pulse {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.soldout-badge-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #fff;
+  animation: countdown-pulse-ring 1.8s ease-out infinite;
+}
+
+.confetti {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.confetti i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 10px;
+  border-radius: 1px;
+  background: var(--c);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+body.hero-revealed .confetti i {
+  animation: confetti-burst 1.1s cubic-bezier(0.2, 0.7, 0.3, 1) var(--d, 0s) both;
+}
+
+@keyframes confetti-burst {
+  0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+  55% { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1) rotate(var(--r)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+
+  .soldout-badge-pulse::after {
+    animation: none;
+    opacity: 0.5;
+  }
+}
+
 /* ===== Sections (shared) ===== */
 
 .section {
@@ -1829,7 +1903,7 @@ body.hero-revealed .hero-bg-photo {
       "url": "https://sxodim.com/kyzylorda/event/abzal-uteshov-yzylordada-17-yrk-yek",
       "price": "5000",
       "priceCurrency": "KZT",
-      "availability": "https://schema.org/InStock"
+      "availability": "https://schema.org/SoldOut"
     }
   },
   {
@@ -2339,7 +2413,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="hero-actions fade-in">
-      <a href="#tour" class="btn btn-accent btn-large" data-track="buy-tickets" data-magnetic>Билет сатып алу</a>
+      <div class="hero-soldout">
+        <a href="#tour" class="btn btn-accent btn-large soldout-badge" data-magnetic>
+          <span class="soldout-badge-pulse" aria-hidden="true"></span>АНШЛАГ — барлық билет сатылды
+        </a>
+        <span class="confetti" aria-hidden="true">
+          <i style="--x:-72px;--y:-44px;--r:-40deg;--c:var(--gis-green);--d:0s"></i>
+          <i style="--x:-42px;--y:-62px;--r:24deg;--c:#fff;--d:.05s"></i>
+          <i style="--x:0px;--y:-70px;--r:-12deg;--c:var(--gis-green);--d:.1s"></i>
+          <i style="--x:42px;--y:-62px;--r:36deg;--c:#fff;--d:.03s"></i>
+          <i style="--x:72px;--y:-44px;--r:-26deg;--c:var(--gis-green);--d:.08s"></i>
+          <i style="--x:-58px;--y:18px;--r:16deg;--c:#fff;--d:.14s"></i>
+          <i style="--x:58px;--y:18px;--r:-16deg;--c:var(--gis-green);--d:.07s"></i>
+          <i style="--x:-22px;--y:-76px;--r:52deg;--c:#fff;--d:.16s"></i>
+          <i style="--x:22px;--y:-76px;--r:-52deg;--c:var(--gis-green);--d:.02s"></i>
+          <i style="--x:0px;--y:44px;--r:0deg;--c:#fff;--d:.19s"></i>
+        </span>
+      </div>
 
       <div class="hero-socials" aria-label="Әлеуметтік желілер">
         <a href="https://www.instagram.com/uteshov.tour/" target="_blank" rel="noopener" aria-label="Instagram">
@@ -2424,7 +2514,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <button class="btn btn-disabled tour-btn" disabled>SOLDOUT</button>
         </li>
 
-        <li class="tour-item fade-in" data-date="2026-09-17T19:00:00+05:00">
+        <li class="tour-item fade-in is-sold-out" data-date="2026-09-17T19:00:00+05:00">
           <div class="tour-item-top">
             <div class="tour-date">
               <span class="tour-day">17</span>
@@ -2442,7 +2532,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
           </div>
           <div class="tour-divider" aria-hidden="true"></div>
-          <a href="https://sxodim.com/kyzylorda/event/abzal-uteshov-yzylordada-17-yrk-yek" class="btn btn-outline tour-btn" target="_blank" rel="noopener" data-track="buy-tickets" data-magnetic="0.15">Билет сатып алу</a>
+          <button class="btn btn-disabled tour-btn" disabled>SOLDOUT</button>
         </li>
 
         <li class="tour-item fade-in is-sold-out" data-date="2026-09-06T19:00:00+05:00">
