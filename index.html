@@ -1183,13 +1183,15 @@ body.hero-revealed .confetti i {
 }
 
 /* First-ever international tour dates (Tashkent, Bishkek). No text badge --
-   the country flag already sits next to the city name in the markup. The
-   row's own hover accent bar (.tour-item::before) is held permanently
-   visible instead of only appearing on hover, recolored as a red-to-gold
-   gradient (the site's two accent hues together read as "special" without
-   new vocabulary), and a one-time diagonal shine sweeps across the card
-   once it scrolls into view -- the same light-sweep technique already used
-   on .hero-title-shine and .btn, just played once per row instead of
+   the country flag already sits next to the city name in the markup.
+   These two rows break from the plain full-bleed list treatment into a
+   standalone card: a visible red-tinted border + glow + gradient wash
+   (pulled inward with its own margin instead of the list's -20px bleed),
+   the row's own hover accent bar (.tour-item::before) held permanently
+   visible instead of only on hover and recolored red-to-gold, and a
+   one-time diagonal shine that sweeps across once the card scrolls into
+   view -- the same light-sweep technique already used on
+   .hero-title-shine and .btn, just played once per row instead of
    continuously or on hover. */
 .tour-item.is-international::before {
   transform: scaleY(1);
@@ -1198,8 +1200,18 @@ body.hero-revealed .confetti i {
 
 .tour-item.is-international {
   position: relative;
-  background: linear-gradient(135deg, rgba(198, 40, 48, 0.08), transparent 60%);
+  margin: 14px 0;
+  padding: 26px 22px 26px 30px;
+  border: 1px solid rgba(198, 40, 48, 0.45);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(198, 40, 48, 0.16), rgba(217, 163, 74, 0.06) 55%, transparent 100%);
+  box-shadow: 0 24px 56px -26px rgba(198, 40, 48, 0.7), inset 0 0 0 1px rgba(217, 163, 74, 0.12);
   overflow: hidden;
+}
+
+.tour-item.is-international:hover {
+  border-color: rgba(198, 40, 48, 0.7);
+  box-shadow: 0 28px 64px -24px rgba(198, 40, 48, 0.8), inset 0 0 0 1px rgba(217, 163, 74, 0.2);
 }
 
 .tour-item.is-international::after {
