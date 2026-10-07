@@ -1182,29 +1182,49 @@ body.hero-revealed .confetti i {
   white-space: nowrap;
 }
 
-/* First-ever international tour dates (Tashkent, Bishkek) -- same pill
-   shape as .tour-session-badge but in the accent red, and the row's own
-   hover accent bar (.tour-item::before) is held permanently visible
-   instead of only appearing on hover, so these two rows read as
-   distinct from the rest of the list without a heavier redesign. */
-.tour-intl-badge {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #fff;
-  background: var(--accent);
-  border-radius: 100px;
-  padding: 3px 10px;
-  white-space: nowrap;
-}
-
+/* First-ever international tour dates (Tashkent, Bishkek). No text badge --
+   the country flag already sits next to the city name in the markup. The
+   row's own hover accent bar (.tour-item::before) is held permanently
+   visible instead of only appearing on hover, recolored as a red-to-gold
+   gradient (the site's two accent hues together read as "special" without
+   new vocabulary), and a one-time diagonal shine sweeps across the card
+   once it scrolls into view -- the same light-sweep technique already used
+   on .hero-title-shine and .btn, just played once per row instead of
+   continuously or on hover. */
 .tour-item.is-international::before {
   transform: scaleY(1);
+  background: linear-gradient(180deg, var(--accent), var(--gis-green));
 }
 
 .tour-item.is-international {
-  background: rgba(198, 40, 48, 0.05);
+  position: relative;
+  background: linear-gradient(135deg, rgba(198, 40, 48, 0.08), transparent 60%);
+  overflow: hidden;
+}
+
+.tour-item.is-international::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.16) 50%, transparent 60%);
+  background-size: 250% 100%;
+  background-position: 160% 0;
+}
+
+.tour-item.is-international.is-visible::after {
+  animation: tour-intl-shine 1.6s cubic-bezier(0.4, 0, 0.2, 1) 0.7s both;
+}
+
+@keyframes tour-intl-shine {
+  from { background-position: 160% 0; }
+  to { background-position: -60% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-item.is-international.is-visible::after {
+    animation: none;
+  }
 }
 
 .tour-remaining.is-soon {
@@ -2703,8 +2723,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="tour-info">
               <div class="tour-city-row">
-                <span class="tour-city">Ташкент</span>
-                <span class="tour-intl-badge">Халықаралық тур</span>
+                <span class="tour-city">🇺🇿 Ташкент</span>
                 <span class="tour-remaining" data-remaining></span>
               </div>
               <a href="https://2gis.ru/tashkent/geo/70000001039001251/69.269645,41.320617" target="_blank" rel="noopener" class="tour-venue"><svg viewBox="-470 -460 15860 16410" aria-hidden="true"><path fill="currentColor" d="M11081.41 9218.29c-2695.72,13.7 -3131.78,1697.02 -3277.11,3120.34l-66.06 629.52 -541.83 0 -66.06 -629.52c-145.33,-1423.32 -594.61,-3106.65 -3197.84,-3120.34 -436.06,-930.68 -621.06,-1683.39 -621.06,-2531.9 0,-2121.25 1678.22,-4105.74 4162.45,-4105.74c2484.28,0 4136.06,1970.73 4136.06,4119.49 0.01,834.76 -79.27,1587.47 -528.55,2518.15l0 0zm-3633.89 -9210.56c-4096.39,0 -7452.84,3476.21 -7452.84,7732.41c0,4270.01 3356.45,7746.16 7452.84,7746.16 4136,0 7479.23,-3476.15 7479.23,-7746.16 0,-4256.19 -3343.23,-7732.41 -7479.23,-7732.41z"/></svg>Туркистон өнер сарайы, Юнусабадский район, Кашгар (Ц-4) ж/м, проспект Алишера Навои, 2Б</a>
@@ -2724,8 +2743,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="tour-info">
               <div class="tour-city-row">
-                <span class="tour-city">Бішкек</span>
-                <span class="tour-intl-badge">Халықаралық тур</span>
+                <span class="tour-city">🇰🇬 Бішкек</span>
                 <span class="tour-remaining" data-remaining></span>
               </div>
               <a href="https://2gis.kg/bishkek/geo/70000001019330086" target="_blank" rel="noopener" class="tour-venue"><svg viewBox="-470 -460 15860 16410" aria-hidden="true"><path fill="currentColor" d="M11081.41 9218.29c-2695.72,13.7 -3131.78,1697.02 -3277.11,3120.34l-66.06 629.52 -541.83 0 -66.06 -629.52c-145.33,-1423.32 -594.61,-3106.65 -3197.84,-3120.34 -436.06,-930.68 -621.06,-1683.39 -621.06,-2531.9 0,-2121.25 1678.22,-4105.74 4162.45,-4105.74c2484.28,0 4136.06,1970.73 4136.06,4119.49 0.01,834.76 -79.27,1587.47 -528.55,2518.15l0 0zm-3633.89 -9210.56c-4096.39,0 -7452.84,3476.21 -7452.84,7732.41c0,4270.01 3356.45,7746.16 7452.84,7746.16 4136,0 7479.23,-3476.15 7479.23,-7746.16 0,-4256.19 -3343.23,-7732.41 -7479.23,-7732.41z"/></svg>Т. Абдумомунов атындағы драма театры, Первомайский район, улица Абдумомунова, 230</a>
@@ -3146,9 +3164,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           билетов (без is-sold-out), затем все SOLDOUT — внутри каждой
           группы по хронологии data-date, от ближайшей к самой поздней.
           Ташкент и Бишкек держим первыми в активной группе как первые
-          международные даты тура (класс is-international, бейдж
-          .tour-intl-badge) — не переставляйте их вниз при добавлении
-          новых активных дат, если явно не попросят.
+          международные даты тура (класс is-international — градиентная
+          полоса слева, лёгкий блик при появлении в вьюпорте, флаг страны
+          прямо в тексте .tour-city) — не переставляйте их вниз при
+          добавлении новых активных дат, если явно не попросят.
           Чтобы добавить новый город/сеанс — скопируйте
           <li class="tour-item fade-in">…</li> и вставьте его в
           соответствующую группу (активные/SOLDOUT) по хронологии.
